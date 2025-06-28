@@ -1,0 +1,731 @@
+/**
+ * Menu CSS - Menu and Level Selection Interface Styling
+ * Beautiful, responsive menu system with level cards and progress indicators
+ */
+
+/* =============================================================================
+   MENU SCREEN
+   ============================================================================= */
+
+.menu-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 600px;
+    padding: var(--space-8) var(--space-4);
+    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+}
+
+.menu-content {
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.menu-hero {
+    margin-bottom: var(--space-8);
+}
+
+.menu-hero h2 {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    background: linear-gradient(45deg, var(--primary-color), var(--success-color));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: var(--space-4);
+}
+
+.menu-hero p {
+    font-size: var(--font-size-lg);
+    color: var(--text-secondary);
+    margin-bottom: 0;
+}
+
+.menu-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-bottom: var(--space-8);
+}
+
+.menu-actions .btn {
+    width: 100%;
+    padding: var(--space-4) var(--space-6);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-normal);
+}
+
+.menu-actions .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.menu-actions .btn:hover::before {
+    left: 100%;
+}
+
+.menu-stats {
+    display: flex;
+    justify-content: space-around;
+    padding: var(--space-6);
+    background: var(--surface);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-light);
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.stat-label {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-value {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--primary-color);
+}
+
+/* =============================================================================
+   LEVEL SELECT SCREEN
+   ============================================================================= */
+
+.level-select-screen {
+    padding: var(--space-6) var(--space-4);
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.level-select-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-8);
+    padding-bottom: var(--space-4);
+    border-bottom: 2px solid var(--border-light);
+}
+
+.level-select-header h2 {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    margin: 0;
+    flex: 1;
+}
+
+.level-select-header .btn {
+    flex-shrink: 0;
+}
+
+/* =============================================================================
+   LEVEL GRID
+   ============================================================================= */
+
+.level-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--space-6);
+    padding: var(--space-4) 0;
+}
+
+/* =============================================================================
+   LEVEL CARDS
+   ============================================================================= */
+
+.level-card {
+    background: var(--surface);
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-md);
+    border: 2px solid var(--border-light);
+    overflow: hidden;
+    transition: all var(--transition-normal);
+    cursor: pointer;
+    position: relative;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+}
+
+.level-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--border-light), var(--border-light));
+    transition: background var(--transition-normal);
+}
+
+.level-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--primary-color);
+}
+
+.level-card.unlocked::before {
+    background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+}
+
+.level-card.completed::before {
+    background: linear-gradient(90deg, var(--success-color), var(--success-color));
+}
+
+.level-card.locked {
+    opacity: 0.6;
+    cursor: not-allowed;
+    filter: grayscale(50%);
+}
+
+.level-card.locked:hover {
+    transform: none;
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-light);
+}
+
+/* Level Card Header */
+.level-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4) var(--space-6) var(--space-2);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+}
+
+.level-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    color: var(--text-inverse);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    box-shadow: var(--shadow-sm);
+}
+
+.level-lock-icon,
+.level-complete-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--text-tertiary);
+    transition: all var(--transition-fast);
+}
+
+.level-complete-icon {
+    color: var(--success-color);
+    animation: completePulse 2s ease-in-out infinite;
+}
+
+@keyframes completePulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.1); }
+}
+
+/* Level Card Content */
+.level-card-content {
+    padding: var(--space-4) var(--space-6);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.level-name {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    margin: 0;
+    line-height: var(--line-height-tight);
+}
+
+.level-description {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    line-height: var(--line-height-relaxed);
+    margin: 0;
+    flex: 1;
+}
+
+/* Progress Bar */
+.level-progress {
+    margin: var(--space-3) 0;
+}
+
+.level-progress .progress-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    margin-bottom: var(--space-2);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.level-progress .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+    border-radius: var(--radius-full);
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.level-progress .progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+    animation: progressShine 2s ease-in-out infinite;
+}
+
+.progress-text {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-tertiary);
+}
+
+/* Level Meta Information */
+.level-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-2) 0;
+    border-top: 1px solid var(--border-light);
+}
+
+.level-theme {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-secondary);
+    padding: var(--space-1) var(--space-2);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-sm);
+}
+
+.level-difficulty {
+    font-size: var(--font-size-sm);
+    color: var(--warning-color);
+}
+
+/* Level Card Footer */
+.level-card-footer {
+    padding: 0 var(--space-6) var(--space-6);
+}
+
+.level-play-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+    border: none;
+    color: var(--text-inverse);
+    font-weight: var(--font-weight-semibold);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+}
+
+.level-play-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.level-play-btn:hover::before {
+    left: 100%;
+}
+
+.level-play-btn:hover {
+    background: linear-gradient(135deg, var(--primary-hover) 0%, var(--primary-active) 100%);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.unlock-requirement {
+    font-size: var(--font-size-sm);
+    color: var(--text-tertiary);
+    text-align: center;
+    padding: var(--space-3);
+    font-style: italic;
+}
+
+/* =============================================================================
+   THEME-SPECIFIC STYLING
+   ============================================================================= */
+
+/* Garden Theme */
+.level-card.theme-garden {
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, var(--surface) 100%);
+}
+
+.level-card.theme-garden .level-number {
+    background: linear-gradient(135deg, #059669, #10b981);
+}
+
+/* Mountain Theme */
+.level-card.theme-mountain {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, var(--surface) 100%);
+}
+
+.level-card.theme-mountain .level-number {
+    background: linear-gradient(135deg, #475569, #64748b);
+}
+
+/* Ocean Theme */
+.level-card.theme-ocean {
+    background: linear-gradient(135deg, #f0f9ff 0%, #dbeafe 50%, var(--surface) 100%);
+}
+
+.level-card.theme-ocean .level-number {
+    background: linear-gradient(135deg, #0284c7, #0ea5e9);
+}
+
+/* Desert Theme */
+.level-card.theme-desert {
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 50%, var(--surface) 100%);
+}
+
+.level-card.theme-desert .level-number {
+    background: linear-gradient(135deg, #d97706, #f59e0b);
+}
+
+/* Forest Theme */
+.level-card.theme-forest {
+    background: linear-gradient(135deg, #f7fee7 0%, #ecfccb 50%, var(--surface) 100%);
+}
+
+.level-card.theme-forest .level-number {
+    background: linear-gradient(135deg, #365314, #84cc16);
+}
+
+/* Crystal Theme */
+.level-card.theme-crystal {
+    background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 50%, var(--surface) 100%);
+}
+
+.level-card.theme-crystal .level-number {
+    background: linear-gradient(135deg, #7c3aed, #a855f7);
+}
+
+/* =============================================================================
+   ANIMATIONS
+   ============================================================================= */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes progressShine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Level unlock animation */
+.level-card.unlock-animation {
+    animation: levelUnlock 1s ease-out;
+}
+
+@keyframes levelUnlock {
+    0% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+    50% {
+        transform: scale(1.05);
+        filter: brightness(1.2);
+        box-shadow: 0 0 20px rgba(37, 99, 235, 0.4);
+    }
+    100% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+}
+
+/* Level completion animation */
+.level-card.complete-animation {
+    animation: levelComplete 1s ease-out;
+}
+
+@keyframes levelComplete {
+    0% {
+        transform: scale(1) rotate(0deg);
+    }
+    25% {
+        transform: scale(1.02) rotate(1deg);
+    }
+    50% {
+        transform: scale(1.04) rotate(-1deg);
+        filter: brightness(1.1);
+        box-shadow: 0 0 30px rgba(5, 150, 105, 0.4);
+    }
+    75% {
+        transform: scale(1.02) rotate(0.5deg);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        filter: brightness(1);
+    }
+}
+
+/* Locked level tooltip */
+.level-locked-tooltip {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--text-primary);
+    color: var(--text-inverse);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    z-index: var(--z-tooltip);
+    animation: tooltipFade 2s ease-out forwards;
+    pointer-events: none;
+}
+
+@keyframes tooltipFade {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    20%, 80% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+}
+
+/* =============================================================================
+   FALLBACK MESSAGE
+   ============================================================================= */
+
+.fallback-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: var(--space-12) var(--space-6);
+    background: var(--surface);
+    border-radius: var(--radius-2xl);
+    border: 2px dashed var(--border-medium);
+}
+
+.fallback-message h3 {
+    margin-bottom: var(--space-4);
+    color: var(--text-primary);
+}
+
+.fallback-message p {
+    margin-bottom: var(--space-6);
+    color: var(--text-secondary);
+}
+
+/* =============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================= */
+
+@media (max-width: 1024px) {
+    .level-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: var(--space-4);
+    }
+    
+    .level-select-header h2 {
+        font-size: var(--font-size-2xl);
+    }
+}
+
+@media (max-width: 768px) {
+    .menu-screen {
+        padding: var(--space-6) var(--space-3);
+        min-height: 500px;
+    }
+    
+    .menu-hero h2 {
+        font-size: var(--font-size-3xl);
+    }
+    
+    .menu-hero p {
+        font-size: var(--font-size-base);
+    }
+    
+    .menu-stats {
+        flex-direction: column;
+        gap: var(--space-4);
+        padding: var(--space-4);
+    }
+    
+    .stat-item {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    
+    .level-select-screen {
+        padding: var(--space-4) var(--space-3);
+    }
+    
+    .level-select-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-3);
+    }
+    
+    .level-select-header h2 {
+        font-size: var(--font-size-xl);
+        order: 2;
+    }
+    
+    .level-select-header .btn {
+        order: 1;
+        align-self: flex-start;
+    }
+    
+    .level-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-4);
+    }
+    
+    .level-card {
+        min-height: 260px;
+    }
+    
+    .level-card-content {
+        padding: var(--space-3) var(--space-4);
+    }
+    
+    .level-card-header {
+        padding: var(--space-3) var(--space-4) var(--space-2);
+    }
+    
+    .level-card-footer {
+        padding: 0 var(--space-4) var(--space-4);
+    }
+}
+
+@media (max-width: 480px) {
+    .menu-hero h2 {
+        font-size: var(--font-size-2xl);
+    }
+    
+    .menu-actions .btn {
+        padding: var(--space-3) var(--space-4);
+        font-size: var(--font-size-base);
+    }
+    
+    .stat-value {
+        font-size: var(--font-size-xl);
+    }
+    
+    .level-card {
+        min-height: 240px;
+    }
+    
+    .level-name {
+        font-size: var(--font-size-lg);
+    }
+    
+    .level-description {
+        font-size: var(--font-size-xs);
+    }
+}
+
+/* =============================================================================
+   ACCESSIBILITY
+   ============================================================================= */
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .level-card {
+        border-width: 3px;
+        box-shadow: none;
+    }
+    
+    .level-card:hover {
+        border-color: var(--text-primary);
+    }
+    
+    .level-play-btn {
+        border: 2px solid var(--text-primary);
+    }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .level-card,
+    .menu-actions .btn,
+    .level-play-btn {
+        transition: none;
+    }
+    
+    .level-card:hover {
+        transform: none;
+    }
+    
+    .level-play-btn:hover {
+        transform: none;
+    }
+    
+    .menu-actions .btn::before,
+    .level-play-btn::before {
+        display: none;
+    }
+    
+    .level-complete-icon {
+        animation: none;
+    }
+    
+    .level-progress .progress-fill::after {
+        display: none;
+    }
+}
+
+/* Focus indicators */
+.level-card:focus,
+.level-play-btn:focus {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+}

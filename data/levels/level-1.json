@@ -1,0 +1,332 @@
+{
+  "level": 1,
+  "name": "Garden Beginnings",
+  "description": "Learn the basics in a peaceful garden setting",
+  "theme": "garden",
+  "difficulty": "easy",
+  "author": "Puzzle Team",
+  "version": "1.0.0",
+  "
+": {
+    "intro": {
+      "title": "Welcome to the Garden",
+      "content": "You find yourself in a beautiful garden where everything seems slightly out of place. The flower tiles have been scattered by a gentle breeze. Can you help restore order to this peaceful sanctuary?",
+      "image": "garden_intro.jpg"
+    },
+    "midpoint": {
+      "title": "Garden Wisdom", 
+      "content": "As you progress through the garden, you notice that each solved puzzle reveals a hidden pattern in the flowers. The garden seems to be teaching you something about patience and careful observation.",
+      "image": "garden_midpoint.jpg"
+    },
+    "completion": {
+      "title": "Garden Master",
+      "content": "The garden is now in perfect harmony! The flowers have taught you the fundamentals of spatial reasoning. You notice a path leading toward distant mountains, beckoning you to continue your journey.",
+      "image": "garden_complete.jpg"
+    }
+  },
+  "puzzles": [
+    {
+      "id": 1,
+      "name": "Morning Dew",
+      "description": "A simple arrangement to start your garden journey",
+      "difficulty": "tutorial",
+      "boardSize": 3,
+      "maxMoves": 15,
+      "shuffleMoves": 8,
+      "targetTime": 120,
+      "hintText": "Start by moving tiles adjacent to the empty space. Try to get the 1 tile in the top-left corner first.",
+      "theme": {
+        "background": "morning_garden",
+        "tileStyle": "flower_dewdrops"
+      },
+      "solution": {
+        "minimumMoves": 8,
+        "optimalPath": ["move description would go here"]
+      }
+    },
+    {
+      "id": 2,
+      "name": "Blooming Petals",
+      "description": "Arrange the flower petals in the correct order",
+      "difficulty": "easy",
+      "boardSize": 3,
+      "maxMoves": 25,
+      "shuffleMoves": 12,
+      "targetTime": 180,
+      "hintText": "Focus on getting the top row correct first, then work on the middle row.",
+      "theme": {
+        "background": "blooming_garden",
+        "tileStyle": "colorful_petals"
+      },
+      "solution": {
+        "minimumMoves": 12,
+        "optimalPath": []
+      }
+    },
+    {
+      "id": 3,
+      "name": "Butterfly Dance",
+      "description": "Guide the butterflies to their favorite flowers",
+      "difficulty": "easy",
+      "boardSize": 3,
+      "maxMoves": 30,
+      "shuffleMoves": 15,
+      "targetTime": 240,
+      "hintText": "Watch how the butterflies move - they prefer certain paths through the garden.",
+      "theme": {
+        "background": "butterfly_garden",
+        "tileStyle": "butterfly_flowers"
+      },
+      "bonusObjectives": [
+        {
+          "name": "Graceful Flight",
+          "description": "Complete in 20 moves or fewer",
+          "reward": 25
+        }
+      ],
+      "solution": {
+        "minimumMoves": 15,
+        "optimalPath": []
+      }
+    },
+    {
+      "id": 4,
+      "name": "Sunny Arrangement",
+      "description": "Organize the sunflowers to face the morning sun",
+      "difficulty": "easy",
+      "boardSize": 3,
+      "maxMoves": 35,
+      "shuffleMoves": 18,
+      "targetTime": 300,
+      "hintText": "Sunflowers grow tall - try to arrange them from smallest to largest.",
+      "theme": {
+        "background": "sunny_garden",
+        "tileStyle": "sunflowers"
+      },
+      "solution": {
+        "minimumMoves": 18,
+        "optimalPath": []
+      }
+    },
+    {
+      "id": 5,
+      "name": "Rose Garden",
+      "description": "Arrange the roses by color and bloom stage",
+      "difficulty": "medium",
+      "boardSize": 4,
+      "maxMoves": 50,
+      "shuffleMoves": 25,
+      "targetTime": 360,
+      "hintText": "This larger grid requires more planning. Work on corners first, then edges.",
+      "theme": {
+        "background": "rose_garden",
+        "tileStyle": "mixed_roses"
+      },
+      "storyTrigger": "midpoint",
+      "bonusObjectives": [
+        {
+          "name": "Rose Expert",
+          "description": "Complete without using hints",
+          "reward": 50
+        }
+      ],
+      "solution": {
+        "minimumMoves": 25,
+        "optimalPath": []
+      }
+    },
+    {
+      "id": 6,
+      "name": "Herb Spiral",
+      "description": "Create a perfect spiral pattern with the herb tiles",
+      "difficulty": "medium",
+      "boardSize": 4,
+      "maxMoves": 60,
+      "shuffleMoves": 30,
+      "targetTime": 420,
+      "hintText": "Think in spirals - start from the outside and work your way in.",
+      "theme": {
+        "background": "herb_garden",
+        "tileStyle": "herb_spiral"
+      },
+      "solution": {
+        "minimumMoves": 30,
+        "optimalPath": []
+      }
+    },
+    {
+      "id": 7,
+      "name": "Secret Garden",
+      "description": "Unlock the hidden pattern in the enchanted garden",
+      "difficulty": "medium",
+      "boardSize": 4,
+      "maxMoves": 65,
+      "shuffleMoves": 32,
+      "targetTime": 480,
+      "hintText": "Some tiles might have special relationships - look for hidden connections.",
+      "theme": {
+        "background": "secret_garden",
+        "tileStyle": "mystical_flowers"
+      },
+      "specialMechanics": {
+        "hiddenPattern": true,
+        "visualCues": "sparkle_effect"
+      },
+      "solution": {
+        "minimumMoves": 32,
+        "optimalPath": []
+      }
+    },
+    {
+      "id": 8,
+      "name": "Garden Symphony",
+      "description": "Arrange the musical flowers to create a harmonious melody",
+      "difficulty": "medium",
+      "boardSize": 4,
+      "maxMoves": 70,
+      "shuffleMoves": 35,
+      "targetTime": 540,
+      "hintText": "Listen to the melody as you move tiles - harmony guides the way.",
+      "theme": {
+        "background": "musical_garden",
+        "tileStyle": "musical_notes_flowers"
+      },
+      "specialMechanics": {
+        "audioFeedback": true,
+        "musicalCues": "garden_melody"
+      },
+      "bonusObjectives": [
+        {
+          "name": "Perfect Harmony",
+          "description": "Complete in under 8 minutes",
+          "reward": 75
+        }
+      ],
+      "solution": {
+        "minimumMoves": 35,
+        "optimalPath": []
+      }
+    },
+    {
+      "id": 9,
+      "name": "Garden Mastery",
+      "description": "The ultimate test of your garden arrangement skills",
+      "difficulty": "challenging",
+      "boardSize": 4,
+      "maxMoves": 75,
+      "shuffleMoves": 40,
+      "targetTime": 600,
+      "hintText": "You've learned much in the garden. Trust your instincts and take your time.",
+      "theme": {
+        "background": "master_garden",
+        "tileStyle": "premium_arrangements"
+      },
+      "storyTrigger": "completion",
+      "bonusObjectives": [
+        {
+          "name": "Garden Guardian",
+          "description": "Complete the entire level without restarting any puzzle",
+          "reward": 200
+        },
+        {
+          "name": "Speed Gardener",
+          "description": "Complete this final puzzle in under 50 moves",
+          "reward": 100
+        }
+      ],
+      "solution": {
+        "minimumMoves": 40,
+        "optimalPath": []
+      }
+    }
+  ],
+  "achievements": [
+    {
+      "id": "garden_beginner",
+      "name": "Garden Beginner",
+      "description": "Complete your first 3 puzzles in the garden",
+      "condition": {
+        "type": "puzzles_completed",
+        "count": 3
+      },
+      "reward": 50
+    },
+    {
+      "id": "green_thumb",
+      "name": "Green Thumb",
+      "description": "Complete 6 puzzles in the garden level",
+      "condition": {
+        "type": "puzzles_completed", 
+        "count": 6
+      },
+      "reward": 100
+    },
+    {
+      "id": "garden_perfectionist",
+      "name": "Garden Perfectionist",
+      "description": "Complete all puzzles with perfect efficiency",
+      "condition": {
+        "type": "perfect_efficiency",
+        "count": 9
+      },
+      "reward": 300
+    },
+    {
+      "id": "flower_power",
+      "name": "Flower Power",
+      "description": "Complete the garden level in under 1 hour total",
+      "condition": {
+        "type": "time_challenge",
+        "maxTime": 3600
+      },
+      "reward": 150
+    }
+  ],
+  "unlockRequirements": {
+    "level2": {
+      "puzzlesRequired": 6,
+      "description": "Complete 6 puzzles to unlock the Mountain Peaks"
+    }
+  },
+  "rewards": {
+    "completion": {
+      "experience": 500,
+      "storyUnlock": "mountain_journey_preview",
+      "title": "Garden Guardian"
+    },
+    "perfectCompletion": {
+      "experience": 1000,
+      "storyUnlock": "secret_garden_lore",
+      "title": "Master Gardener",
+      "specialReward": "garden_theme_unlock"
+    }
+  },
+  "statistics": {
+    "averageCompletionTime": 45,
+    "difficultyRating": 2.5,
+    "playerFeedback": {
+      "educational": true,
+      "enjoyable": true,
+      "balancedDifficulty": true
+    }
+  },
+  "accessibility": {
+    "colorBlindSupport": true,
+    "screenReaderDescriptions": {
+      "1": "Three by three grid with flower pattern tiles numbered 1 through 8",
+      "2": "Colorful petal arrangement in three by three formation",
+      "3": "Butterfly and flower combination tiles in small grid",
+      "4": "Sunflower tiles arranged in three by three pattern",
+      "5": "Four by four grid with rose tiles in various bloom stages",
+      "6": "Herb spiral pattern in four by four arrangement",
+      "7": "Mystical flower tiles with hidden pattern indicators",
+      "8": "Musical note flower combination in four by four grid",
+      "9": "Premium garden arrangement in four by four master pattern"
+    },
+    "keyboardShortcuts": {
+      "hint": "h",
+      "undo": "u", 
+      "restart": "r"
+    }
+  }
+}

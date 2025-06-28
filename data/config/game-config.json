@@ -1,0 +1,423 @@
+{
+  "version": "0.0.1",
+  "lastUpdated": "2025-06-28",
+  "
+": {
+    "name": "Sliding Puzzle Adventure",
+    "description": "A challenging sliding puzzle game with progressive difficulty and story elements",
+    "author": "Sliding Puzzle Team",
+    "maxLevels": 10,
+    "puzzlesPerLevel": 9,
+    "minBoardSize": 3,
+    "maxBoardSize": 5
+  },
+  "difficulty": {
+    "easy": {
+      "name": "Easy",
+      "description": "Perfect for beginners",
+      "boardSize": 3,
+      "maxMoves": 50,
+      "shuffleMoves": 20,
+      "timeLimit": null,
+      "hintsAllowed": 5,
+      "scoreMultiplier": 1.0,
+      "unlockRequirement": 0
+    },
+    "medium": {
+      "name": "Medium", 
+      "description": "Balanced challenge for most players",
+      "boardSize": 4,
+      "maxMoves": 80,
+      "shuffleMoves": 35,
+      "timeLimit": null,
+      "hintsAllowed": 3,
+      "scoreMultiplier": 1.5,
+      "unlockRequirement": 10
+    },
+    "hard": {
+      "name": "Hard",
+      "description": "For puzzle veterans",
+      "boardSize": 4,
+      "maxMoves": 60,
+      "shuffleMoves": 45,
+      "timeLimit": 600000,
+      "hintsAllowed": 1,
+      "scoreMultiplier": 2.0,
+      "unlockRequirement": 25
+    },
+    "expert": {
+      "name": "Expert",
+      "description": "Ultimate challenge",
+      "boardSize": 5,
+      "maxMoves": 100,
+      "shuffleMoves": 60,
+      "timeLimit": 900000,
+      "hintsAllowed": 0,
+      "scoreMultiplier": 3.0,
+      "unlockRequirement": 50
+    }
+  },
+  "levels": {
+    "1": {
+      "name": "Garden Beginnings",
+      "description": "Learn the basics in a peaceful garden setting",
+      "theme": "garden",
+      "difficulty": "easy",
+      "puzzleCount": 9,
+      "storyUnlocks": ["intro", "garden_discovery"],
+      "requiredCompletions": 6,
+      "bonusObjectives": [
+        {
+          "name": "Perfect Garden",
+          "description": "Complete 3 puzzles without using hints",
+          "reward": 100
+        },
+        {
+          "name": "Speed Gardener", 
+          "description": "Complete any puzzle in under 2 minutes",
+          "reward": 50
+        }
+      ]
+    },
+    "2": {
+      "name": "Mountain Peaks",
+      "description": "Climb higher with increased complexity",
+      "theme": "mountain",
+      "difficulty": "easy",
+      "puzzleCount": 9,
+      "storyUnlocks": ["mountain_journey", "ancient_temple"],
+      "requiredCompletions": 7,
+      "bonusObjectives": [
+        {
+          "name": "Peak Performance",
+          "description": "Complete all puzzles in the level",
+          "reward": 200
+        },
+        {
+          "name": "Efficient Climber",
+          "description": "Average less than 40 moves per puzzle",
+          "reward": 150
+        }
+      ]
+    },
+    "3": {
+      "name": "Ocean Depths",
+      "description": "Dive into medium difficulty waters",
+      "theme": "ocean",
+      "difficulty": "medium",
+      "puzzleCount": 9,
+      "storyUnlocks": ["underwater_city", "sea_crystal"],
+      "requiredCompletions": 7,
+      "bonusObjectives": [
+        {
+          "name": "Deep Sea Explorer",
+          "description": "Discover all hidden story elements",
+          "reward": 300
+        },
+        {
+          "name": "Ocean Master",
+          "description": "Complete level with 90% efficiency",
+          "reward": 250
+        }
+      ]
+    },
+    "4": {
+      "name": "Desert Mysteries",
+      "description": "Navigate the shifting sands of challenge",
+      "theme": "desert",
+      "difficulty": "medium",
+      "puzzleCount": 9,
+      "storyUnlocks": ["oasis_discovery", "desert_temple"],
+      "requiredCompletions": 8,
+      "bonusObjectives": [
+        {
+          "name": "Mirage Master",
+          "description": "Complete 5 puzzles without mistakes",
+          "reward": 400
+        }
+      ]
+    },
+    "5": {
+      "name": "Forest Labyrinth",
+      "description": "Get lost in the complexity of nature",
+      "theme": "forest",
+      "difficulty": "medium",
+      "puzzleCount": 9,
+      "storyUnlocks": ["forest_guardian", "magic_grove"],
+      "requiredCompletions": 8,
+      "bonusObjectives": [
+        {
+          "name": "Path Finder",
+          "description": "Find the optimal solution for 3 puzzles",
+          "reward": 500
+        }
+      ]
+    },
+    "6": {
+      "name": "Crystal Caverns",
+      "description": "Hard puzzles await in crystalline depths",
+      "theme": "crystal",
+      "difficulty": "hard",
+      "puzzleCount": 9,
+      "storyUnlocks": ["crystal_power", "cavern_secrets"],
+      "requiredCompletions": 8,
+      "bonusObjectives": [
+        {
+          "name": "Crystal Clear",
+          "description": "Complete level without using undo",
+          "reward": 600
+        }
+      ]
+    },
+    "7": {
+      "name": "Sky Fortress",
+      "description": "Soar through challenging aerial puzzles",
+      "theme": "sky",
+      "difficulty": "hard",
+      "puzzleCount": 9,
+      "storyUnlocks": ["sky_kingdom", "flying_machine"],
+      "requiredCompletions": 9,
+      "bonusObjectives": [
+        {
+          "name": "Sky Walker",
+          "description": "Complete all puzzles under time limit",
+          "reward": 750
+        }
+      ]
+    },
+    "8": {
+      "name": "Volcano Core",
+      "description": "Feel the heat of expert-level challenges",
+      "theme": "volcano",
+      "difficulty": "hard",
+      "puzzleCount": 9,
+      "storyUnlocks": ["lava_forge", "fire_spirit"],
+      "requiredCompletions": 9,
+      "bonusObjectives": [
+        {
+          "name": "Fire Master",
+          "description": "Complete level with no hints or undos",
+          "reward": 1000
+        }
+      ]
+    },
+    "9": {
+      "name": "Ice Palace",
+      "description": "Navigate the frozen halls of complexity",
+      "theme": "ice",
+      "difficulty": "expert",
+      "puzzleCount": 9,
+      "storyUnlocks": ["ice_queen", "frozen_throne"],
+      "requiredCompletions": 9,
+      "bonusObjectives": [
+        {
+          "name": "Ice Cold",
+          "description": "Perfect score on all puzzles",
+          "reward": 1500
+        }
+      ]
+    },
+    "10": {
+      "name": "Final Convergence",
+      "description": "The ultimate test of your skills",
+      "theme": "cosmic",
+      "difficulty": "expert",
+      "puzzleCount": 9,
+      "storyUnlocks": ["final_revelation", "true_ending"],
+      "requiredCompletions": 9,
+      "bonusObjectives": [
+        {
+          "name": "Master Puzzler",
+          "description": "Complete the entire game",
+          "reward": 2000
+        },
+        {
+          "name": "Perfection",
+          "description": "Complete final level with perfect efficiency",
+          "reward": 5000
+        }
+      ]
+    }
+  },
+  "scoring": {
+    "basePoints": {
+      "puzzleComplete": 100,
+      "moveEfficiency": 10,
+      "timeBonus": 5,
+      "noHints": 50,
+      "noUndo": 25,
+      "perfectSolution": 200
+    },
+    "penalties": {
+      "hintUsed": -10,
+      "excessiveUndo": -5,
+      "timeOverage": -1
+    },
+    "multipliers": {
+      "streak": 1.2,
+      "levelComplete": 1.5,
+      "perfectLevel": 2.0
+    }
+  },
+  "ui": {
+    "themes": {
+      "default": {
+        "name": "Classic",
+        "description": "Clean and timeless design",
+        "colors": {
+          "primary": "#2563eb",
+          "secondary": "#64748b",
+          "success": "#059669",
+          "warning": "#d97706",
+          "danger": "#dc2626"
+        }
+      },
+      "dark": {
+        "name": "Midnight",
+        "description": "Dark theme for comfortable gaming",
+        "colors": {
+          "primary": "#3b82f6",
+          "secondary": "#94a3b8",
+          "success": "#10b981",
+          "warning": "#f59e0b",
+          "danger": "#ef4444"
+        }
+      },
+      "nature": {
+        "name": "Forest",
+        "description": "Earth tones inspired by nature",
+        "colors": {
+          "primary": "#059669",
+          "secondary": "#6b7280",
+          "success": "#10b981",
+          "warning": "#d97706",
+          "danger": "#dc2626"
+        }
+      }
+    },
+    "animations": {
+      "tileMoveSpeed": 200,
+      "modalFadeSpeed": 300,
+      "uiTransitionSpeed": 250,
+      "completionCelebrationSpeed": 800
+    },
+    "sounds": {
+      "masterVolume": 0.7,
+      "effects": {
+        "tileMove": {
+          "volume": 0.8,
+          "file": "tile_move.mp3"
+        },
+        "puzzleComplete": {
+          "volume": 1.0,
+          "file": "puzzle_complete.mp3"
+        },
+        "invalidMove": {
+          "volume": 0.6,
+          "file": "invalid_move.mp3"
+        },
+        "buttonClick": {
+          "volume": 0.5,
+          "file": "button_click.mp3"
+        },
+        "levelComplete": {
+          "volume": 1.0,
+          "file": "level_complete.mp3"
+        },
+        "gameOver": {
+          "volume": 0.8,
+          "file": "game_over.mp3"
+        }
+      },
+      "music": {
+        "menuTheme": {
+          "volume": 0.4,
+          "file": "menu_theme.mp3",
+          "loop": true
+        },
+        "gameplayTheme": {
+          "volume": 0.3,
+          "file": "gameplay_theme.mp3",
+          "loop": true
+        }
+      }
+    }
+  },
+  "accessibility": {
+    "features": {
+      "highContrast": true,
+      "reducedMotion": true,
+      "screenReader": true,
+      "keyboardNavigation": true,
+      "colorBlindSupport": true
+    },
+    "controls": {
+      "keyboardShortcuts": {
+        "hint": "h",
+        "undo": "z",
+        "restart": "r",
+        "pause": "space",
+        "menu": "escape"
+      },
+      "touchGestures": {
+        "swipe": true,
+        "tap": true,
+        "longPress": true
+      }
+    }
+  },
+  "analytics": {
+    "tracking": {
+      "puzzleCompletions": true,
+      "moveEfficiency": true,
+      "timeTracking": true,
+      "hintUsage": true,
+      "difficultyProgression": true,
+      "sessionLength": true,
+      "errorPatterns": true
+    },
+    "retention": {
+      "dataStorageDays": 365,
+      "sessionTimeoutMinutes": 30,
+      "cleanupIntervalDays": 7
+    }
+  },
+  "performance": {
+    "optimization": {
+      "preloadAssets": true,
+      "imageCompression": true,
+      "codeMinification": true,
+      "cacheStrategy": "aggressive"
+    },
+    "limits": {
+      "maxBoardSize": 6,
+      "maxAnimations": 10,
+      "maxParticles": 50,
+      "memoryThresholdMB": 100
+    }
+  },
+  "development": {
+    "debug": {
+      "enabled": false,
+      "logLevel": "info",
+      "showPerformanceMetrics": false,
+      "enableCheatCodes": false
+    },
+    "testing": {
+      "autoSave": true,
+      "fastAnimations": false,
+      "skipIntros": false,
+      "unlockAllLevels": false
+    }
+  },
+  "localization": {
+    "defaultLanguage": "en",
+    "supportedLanguages": ["en", "es", "fr", "de", "it", "pt", "ja", "ko", "zh"],
+    "rtlSupport": false,
+    "dateFormat": "MM/DD/YYYY",
+    "numberFormat": {
+      "thousands": ",",
+      "decimal": "."
+    }
+  }
+}
