@@ -3,7 +3,7 @@
  * Provides independent validation functions for the sliding puzzle game
  */
 
-import { MECHANICS, VALIDATION, DEBUG } from './Constants.js';
+import { MECHANICS, VALIDATION, DEBUG } from '../utils/Constants.js';
 import {
     findEmptyPosition,
     findPosition,
@@ -14,7 +14,7 @@ import {
     arrays2DEqual,
     createSolvedPuzzle,
     flatten2DArray
-} from './ArrayUtils.js';
+} from '../utils/ArrayUtils.js';
 
 // =============================================================================
 // MOVE VALIDATION

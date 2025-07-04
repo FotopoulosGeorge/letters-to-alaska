@@ -1,8 +1,36 @@
-/**
-     * Show story content modal
-     * @param {object} storyData - Story content data
-     * @private
-     */
+/* Letters to Alaska
+ * Main.js - Application Entry Point
+ * Initializes the sliding puzzle game and wires up all components
+ */
+
+import { DEBUG, EVENTS, GAME_STATES } from './utils/Constants.js';
+import { gameEventBus } from './utils/EventEmitter.js';
+import { createPuzzle } from './core/PuzzleLogic.js';
+import { validatePuzzleState } from './core/Validator.js';
+import { createGameEngine } from './core/GameEngine.js';
+import { createStateManager } from './core/StateManager.js';
+import { createLevelManager } from './core/LevelManager.js';
+import { createMenuSystem } from './ui/MenuSystem.js';
+import { GameConfirmations, confirmWarning } from './ui/ConfirmDialog.js';
+
+// =============================================================================
+// GLOBAL GAME STATE
+// =============================================================================
+
+class GameApp {
+    constructor() {
+        this.gameEngine = null;
+        this.stateManager = null;
+        this.levelManager = null;
+        this.menuSystem = null;
+        this.gameState = GAME_STATES.MENU;
+        this.isInitialized = false;
+        this.loadingProgress = 0;
+        this.settings = this._getDefaultSettings();
+        
+        // Initialize the application
+        this._initialize();
+    }
     _showStoryContent(storyData) {
         console.log('📖 Showing story content:', storyData.key);
         
@@ -164,40 +192,7 @@
         if (DEBUG.ENABLED) {
             console.debug('All systems connected successfully');
         }
-    }/**
- * Main.js - Application Entry Point
- * Initializes the sliding puzzle game and wires up all components
- */
-
-import { DEBUG, EVENTS, GAME_STATES } from './utils/Constants.js';
-import { gameEventBus } from './utils/EventEmitter.js';
-import { createPuzzle } from './core/PuzzleLogic.js';
-import { validatePuzzleState } from './core/Validator.js';
-import { createGameEngine } from './core/GameEngine.js';
-import { createStateManager } from './core/StateManager.js';
-import { createLevelManager } from './core/LevelManager.js';
-import { createMenuSystem } from './ui/MenuSystem.js';
-import { GameConfirmations, confirmWarning } from './ui/ConfirmDialog.js';
-
-// =============================================================================
-// GLOBAL GAME STATE
-// =============================================================================
-
-class GameApp {
-    constructor() {
-        this.gameEngine = null;
-        this.stateManager = null;
-        this.levelManager = null;
-        this.menuSystem = null;
-        this.gameState = GAME_STATES.MENU;
-        this.isInitialized = false;
-        this.loadingProgress = 0;
-        this.settings = this._getDefaultSettings();
-        
-        // Initialize the application
-        this._initialize();
     }
-
     // =============================================================================
     // INITIALIZATION
     // =============================================================================
@@ -665,6 +660,182 @@ class GameApp {
             if (DEBUG.ENABLED) {
                 console.debug('Continue button updated:', hasSavedGame ? 'enabled' : 'disabled');
             }
+        }
+    }
+
+    /**
+     * Update menu statistics from saved progress
+     * @private
+     */
+       /**
+     * Update game HUD elements
+     * @private
+     */
+    _updateGameHUD() {
+        console.log('🎮 Updating game HUD...');
+        
+        // Update level and puzzle numbers
+        const currentLevelEl = document.getElementById('current-level');
+        const currentPuzzleEl = document.getElementById('current-puzzle');
+        
+        if (this.levelManager) {
+            const currentLevel = this.levelManager.getCurrentLevel();
+            const currentPuzzle = this.levelManager.getCurrentPuzzle();
+            
+            if (currentLevelEl) currentLevelEl.textContent = currentLevel.toString();
+            if (currentPuzzleEl) currentPuzzleEl.textContent = currentPuzzle.toString();
+        }
+        
+        // Update moves counter
+        const movesCountEl = document.getElementById('moves-count');
+        const maxMovesEl = document.getElementById('max-moves');
+        
+        if (this.gameEngine) {
+            const gameState = this.gameEngine.getCurrentGameState();
+            if (gameState) {
+                if (movesCountEl) movesCountEl.textContent = gameState.moveCount.toString();
+                if (maxMovesEl) maxMovesEl.textContent = gameState.maxMoves.toString();
+            }
+        }
+        
+        // Update timer
+        this._updateTimer();
+        
+        // Update progress indicator
+        this._updateProgressIndicator();
+    }
+
+    /**
+     * Update the game timer display
+     * @private
+     */
+    _updateTimer() {
+        const timerEl = document.getElementById('game-timer');
+        if (timerEl && this.gameEngine) {
+            const gameState = this.gameEngine.getCurrentGameState();
+            if (gameState && gameState.startTime) {
+                const elapsed = Date.now() - gameState.startTime;
+                const minutes = Math.floor(elapsed / 60000);
+                const seconds = Math.floor((elapsed % 60000) / 1000);
+                timerEl.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+        }
+    }
+
+    /**
+     * Update the progress indicator
+     * @private
+     */
+    _updateProgressIndicator() {
+        const progressEl = document.getElementById('puzzle-progress');
+        const progressTextEl = document.getElementById('progress-text');
+        
+        if (this.gameEngine) {
+            const gameState = this.gameEngine.getCurrentGameState();
+            if (gameState) {
+                const progress = gameState.progress || 0;
+                
+                if (progressEl) {
+                    progressEl.style.width = `${progress}%`;
+                }
+                
+                if (progressTextEl) {
+                    progressTextEl.textContent = `${Math.round(progress)}% Complete`;
+                }
+            }
+        }
+    }
+
+    /**
+     * Render the puzzle board
+     * @private
+     */
+    _renderPuzzleBoard() {
+        console.log('🎯 Rendering puzzle board...');
+        
+        const puzzleBoardEl = document.getElementById('puzzle-board');
+        if (!puzzleBoardEl) {
+            console.error('Puzzle board element not found');
+            return;
+        }
+        
+        // Clear existing board
+        puzzleBoardEl.innerHTML = '';
+        
+        // Get current puzzle state from game engine
+        if (this.gameEngine) {
+            const gameState = this.gameEngine.getCurrentGameState();
+            if (gameState && gameState.puzzle) {
+                this._renderPuzzleTiles(puzzleBoardEl, gameState.puzzle);
+            } else {
+                // Create a default 4x4 puzzle for testing
+                this._renderDefaultPuzzle(puzzleBoardEl);
+            }
+        } else {
+            // Fallback: render a placeholder
+            this._renderDefaultPuzzle(puzzleBoardEl);
+        }
+    }
+
+    /**
+     * Render puzzle tiles on the board
+     * @param {HTMLElement} boardEl - The puzzle board element
+     * @param {Array} puzzleState - Current puzzle state
+     * @private
+     */
+    _renderPuzzleTiles(boardEl, puzzleState) {
+        const size = Math.sqrt(puzzleState.length);
+        boardEl.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+        boardEl.style.gridTemplateRows = `repeat(${size}, 1fr)`;
+        
+        puzzleState.forEach((tileValue, index) => {
+            const tile = document.createElement('div');
+            tile.className = 'puzzle-tile';
+            
+            if (tileValue === 0) {
+                tile.classList.add('empty-tile');
+            } else {
+                tile.classList.add('number-tile');
+                tile.textContent = tileValue.toString();
+                tile.dataset.value = tileValue.toString();
+                tile.dataset.position = index.toString();
+                
+                // Add click handler
+                tile.addEventListener('click', () => {
+                    this._handleTileClick(index);
+                });
+            }
+            
+            boardEl.appendChild(tile);
+        });
+    }
+
+    /**
+     * Render a default puzzle for testing
+     * @param {HTMLElement} boardEl - The puzzle board element
+     * @private
+     */
+    _renderDefaultPuzzle(boardEl) {
+        console.log('🔧 Rendering default puzzle for testing...');
+        
+        // Create a simple 4x4 puzzle
+        const defaultPuzzle = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0];
+        this._renderPuzzleTiles(boardEl, defaultPuzzle);
+    }
+
+    /**
+     * Handle tile click events
+     * @param {number} tileIndex - Index of clicked tile
+     * @private
+     */
+    _handleTileClick(tileIndex) {
+        console.log('🎯 Tile clicked:', tileIndex);
+        
+        if (this.gameEngine) {
+            // Let the game engine handle the move
+            this.gameEngine.handleTileClick(tileIndex);
+        } else {
+            console.warn('Game engine not available for tile click');
         }
     }
 

@@ -3,7 +3,7 @@
  * Handles all puzzle operations, validation, and state management
  */
 
-import { MECHANICS, EVENTS, DEBUG } from './Constants.js';
+import { MECHANICS, EVENTS, DEBUG } from '../utils/Constants.js';
 import {
     create2DArray,
     clone2DArray,
@@ -20,8 +20,8 @@ import {
     arrays2DEqual,
     puzzleToString,
     getManhattanDistance
-} from './ArrayUtils.js';
-import EventEmitter from './EventEmitter.js';
+} from '../utils/ArrayUtils.js';
+import { EventEmitter } from '../utils/EventEmitter.js';
 
 // =============================================================================
 // PUZZLE CLASS

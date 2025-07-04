@@ -3,7 +3,7 @@
  * Contains essential array manipulation functions for puzzle logic
  */
 
-import { MECHANICS } from './Constants.js';
+import { MECHANICS } from '../utils/Constants.js';
 
 // =============================================================================
 // BASIC ARRAY OPERATIONS

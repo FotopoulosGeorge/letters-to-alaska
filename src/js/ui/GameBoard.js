@@ -5,7 +5,7 @@
 
 import { EVENTS, MECHANICS, ANIMATIONS, DEBUG } from '../utils/Constants.js';
 import { findEmptyPosition, areAdjacent } from '../utils/ArrayUtils.js';
-import EventEmitter from '../utils/EventEmitter.js';
+import { EventEmitter } from '../utils/EventEmitter.js';
 
 // =============================================================================
 // GAME BOARD CLASS

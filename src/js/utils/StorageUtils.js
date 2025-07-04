@@ -3,7 +3,7 @@
  * Provides safe, robust local storage operations with error handling and data validation
  */
 
-import { STORAGE_KEYS, DEBUG } from './Constants.js';
+import { STORAGE_KEYS, DEBUG } from '../utils/Constants.js';
 
 // =============================================================================
 // STORAGE UTILITIES

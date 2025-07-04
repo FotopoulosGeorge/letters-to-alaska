@@ -4,7 +4,7 @@
  */
 
 import { EVENTS, DEBUG } from '../utils/Constants.js';
-import EventEmitter from '../utils/EventEmitter.js';
+import { EventEmitter } from '../utils/EventEmitter.js';
 
 // =============================================================================
 // HUD CLASS

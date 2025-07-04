@@ -374,10 +374,34 @@ export class GameEngine {
             this.startNewGame(); // Fallback to new game
         }
     }
+    
+    getCurrentGameState() {
+        return {
+            gameData: this.gameData,
+            puzzleState: this.components.puzzle ? this.components.puzzle.exportState() : null,
+            moveCount: this.components.puzzle ? this.components.puzzle.getMoveCount() : 0,
+            maxMoves: this.gameData.difficulty.maxMoves,
+            startTime: this.components.puzzle ? this.components.puzzle.startTime : null,
+            progress: 0 // Calculate based on puzzle state
+        };
+    }
 
+    setLevelManager(levelManager) {
+        this.levelManager = levelManager;
+    }
+
+    handleTileClick(tileIndex) {
+        if (this.components.puzzle) {
+            const size = this.components.puzzle.size;
+            const row = Math.floor(tileIndex / size);
+            const col = tileIndex % size;
+            this.components.puzzle.moveTile(row, col);
+        }
+    }
     /**
      * Advance to next puzzle
      */
+
     nextPuzzle() {
         this.gameData.currentPuzzle++;
         

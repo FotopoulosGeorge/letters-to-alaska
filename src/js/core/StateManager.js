@@ -20,7 +20,7 @@ import {
     migrateData,
     onStorageChange
 } from '../utils/StorageUtils.js';
-import EventEmitter from '../utils/EventEmitter.js';
+import { EventEmitter } from '../utils/EventEmitter.js';
 
 // =============================================================================
 // STATE MANAGER CLASS

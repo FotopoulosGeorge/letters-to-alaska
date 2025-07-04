@@ -3,7 +3,7 @@
  * Enables clean communication between game components
  */
 
-import { DEBUG } from './Constants.js';
+import { DEBUG } from '../utils/Constants.js';
 
 // =============================================================================
 // EVENT EMITTER CLASS

@@ -139,8 +139,26 @@ export const EVENTS = {
     
     // Progress events
     PROGRESS_SAVED: 'progressSaved',
-    PROGRESS_LOADED: 'progressLoaded'
+    PROGRESS_LOADED: 'progressLoaded',
+
+    HINT_REQUESTED: 'hint_requested',
+    RESTART_REQUESTED: 'restart_requested',
+    TIMER_STARTED: 'timer_started',
+    TIMER_STOPPED: 'timer_stopped',
+    TIMER_PAUSED: 'timer_paused',
+    TIMER_RESUMED: 'timer_resumed',
+    MOVE_UNDONE: 'move_undone',
+    PUZZLE_GENERATED: 'puzzle_generated',
+    PUZZLE_STATE_SET: 'puzzle_state_set',
+    PUZZLE_STATE_IMPORTED: 'puzzle_state_imported',
+    PUZZLE_RESET: 'puzzle_reset',
+    SCREEN_CHANGED: 'screen_changed',
+    LEVEL_UNLOCKED: 'level_unlocked',
+    PROGRESS_RESET: 'progress_reset',
+    MANUAL_SAVE_COMPLETED: 'manual_save_completed',
+    STORAGE_CHANGED: 'storage_changed'
 };
+
 
 // =============================================================================
 // STORAGE KEYS
@@ -181,7 +199,7 @@ export const MECHANICS = {
     
     // Empty tile representation
     EMPTY_TILE: 0,
-    
+
     // Minimum moves for puzzle generation
     MIN_SHUFFLE_MOVES: 10,
     
