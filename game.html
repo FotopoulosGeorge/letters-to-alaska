@@ -1,9 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- =================================================================== -->
+<!-- HEAD SECTION -->
+<!-- =================================================================== -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Letters to Alaska - Sliding Puzzle Adventure</title>
+    <!-- =================================================================== -->
+    <!-- CSS STYLES -->
+    <!-- =================================================================== -->
     <style>
         * {
             margin: 0;
@@ -554,6 +560,9 @@
     </style>
 </head>
 <body>
+    <!-- =================================================================== -->
+    <!-- AUDIO ELEMENTS -->
+    <!-- =================================================================== -->
     <!-- Hidden audio elements -->
     <audio id="background-music" loop>
         <source src="audio/background.mp3" type="audio/mpeg">
@@ -568,6 +577,9 @@
         <source src="audio/complete.wav" type="audio/wav">
     </audio>
 
+    <!-- =================================================================== -->
+    <!-- START SCREEN -->
+    <!-- =================================================================== -->
     <!-- Start Screen -->
     <div class="screen start-screen active" id="start-screen">
         <h1>Letters to Alaska</h1>
@@ -594,6 +606,9 @@
         </div>
     </div>
 
+    <!-- =================================================================== -->
+    <!-- GAME SCREEN -->
+    <!-- =================================================================== -->
     <!-- Game Screen -->
     <div class="screen game-container" id="game-screen">
         <div class="game-header">
@@ -646,6 +661,9 @@
         </div>
     </div>
 
+    <!-- =================================================================== -->
+    <!-- MODALS -->
+    <!-- =================================================================== -->
     <!-- Settings Modal -->
     <div class="modal-overlay" id="settings-modal">
         <div class="modal">
@@ -747,7 +765,13 @@
         </div>
     </div>
 
+    <!-- =================================================================== -->
+    <!-- JAVASCRIPT -->
+    <!-- =================================================================== -->
     <script>
+        // =================================================================== 
+        // STORY DATA
+        // =================================================================== 
         // Story data for each level (now with 8 chapters!)
         const storyData = [
             {
@@ -849,6 +873,9 @@
             }
         ];
 
+        // =================================================================== 
+        // MAIN GAME CLASS
+        // =================================================================== 
         class StoryPuzzleGame {
             constructor() {
                 this.board = [];
@@ -868,6 +895,9 @@
                 this.init();
             }
 
+            // =================================================================== 
+            // SETTINGS METHODS
+            // =================================================================== 
             loadSettings() {
                 const defaultSettings = {
                     autoScramble: true,
@@ -901,6 +931,9 @@
                 };
             }
 
+            // =================================================================== 
+            // AUDIO METHODS
+            // =================================================================== 
             initAudio() {
                 this.backgroundMusic = document.getElementById('background-music');
                 this.moveSound = document.getElementById('move-sound');
@@ -974,6 +1007,9 @@
                 }
             }
 
+            // =================================================================== 
+            // INITIALIZATION METHODS
+            // =================================================================== 
             init() {
                 this.createChapterGrid();
                 this.updateLevelDisplay();
@@ -1013,6 +1049,9 @@
                 });
             }
 
+            // =================================================================== 
+            // GAME PROPERTIES
+            // =================================================================== 
             get currentStory() {
                 return storyData[this.currentLevel - 1];
             }
@@ -1021,6 +1060,9 @@
                 return this.currentStory.difficulty;
             }
 
+            // =================================================================== 
+            // PROGRESS METHODS
+            // =================================================================== 
             loadProgress() {
                 const saved = localStorage.getItem('letters-to-alaska-progress');
                 if (saved) {
@@ -1037,6 +1079,9 @@
                 localStorage.setItem('letters-to-alaska-progress', JSON.stringify(this.gameProgress));
             }
 
+            // =================================================================== 
+            // UI METHODS
+            // =================================================================== 
             createLevelSelector() {
                 const selector = document.getElementById('level-selector');
                 selector.innerHTML = '';
@@ -1061,6 +1106,9 @@
                 }
             }
 
+            // =================================================================== 
+            // LEVEL LOADING
+            // =================================================================== 
             async loadLevel(levelNum) {
                 if (levelNum < 1 || levelNum > storyData.length || levelNum > this.gameProgress.unlockedLevels) {
                     return;
@@ -1090,6 +1138,9 @@
                 this.updateNavigationButtons();
             }
 
+            // =================================================================== 
+            // IMAGE METHODS
+            // =================================================================== 
             async loadImage(imagePath) {
                 return new Promise((resolve, reject) => {
                     const img = new Image();
@@ -1148,6 +1199,9 @@
                 }
             }
 
+            // =================================================================== 
+            // DISPLAY METHODS
+            // =================================================================== 
             updateLevelDisplay() {
                 const story = this.currentStory;
                 document.getElementById('level-title').textContent = story.title;
@@ -1189,6 +1243,9 @@
                 this.render();
             }
 
+            // =================================================================== 
+            // BOARD METHODS
+            // =================================================================== 
             createSolvedBoard() {
                 this.board = [];
                 let num = 1;
@@ -1239,6 +1296,9 @@
                 document.getElementById('moves').textContent = this.moves;
             }
 
+            // =================================================================== 
+            // GAME LOGIC
+            // =================================================================== 
             moveTile(row, col) {
                 if (!this.isAdjacent(row, col, this.emptyPos.row, this.emptyPos.col)) {
                     return;
@@ -1287,6 +1347,9 @@
                 this.showVictory();
             }
 
+            // =================================================================== 
+            // UTILITY METHODS
+            // =================================================================== 
             isAdjacent(row1, col1, row2, col2) {
                 const rowDiff = Math.abs(row1 - row2);
                 const colDiff = Math.abs(col1 - col2);
@@ -1348,6 +1411,9 @@
                 return adjacent;
             }
 
+            // =================================================================== 
+            // TIMER METHODS
+            // =================================================================== 
             startTimer() {
                 this.startTime = Date.now();
                 this.timerInterval = setInterval(() => {
@@ -1366,6 +1432,9 @@
                 }
             }
 
+            // =================================================================== 
+            // MODAL METHODS
+            // =================================================================== 
             showVictory() {
                 const elapsed = Date.now() - this.startTime;
                 const minutes = Math.floor(elapsed / 60000);
@@ -1403,6 +1472,9 @@
                 document.getElementById('story-modal').style.display = 'flex';
             }
 
+            // =================================================================== 
+            // SCREEN NAVIGATION
+            // =================================================================== 
             showGameScreen() {
                 document.getElementById('start-screen').classList.remove('active');
                 document.getElementById('game-screen').classList.add('active');
@@ -1448,6 +1520,9 @@
             }
         }
 
+        // =================================================================== 
+        // GLOBAL FUNCTIONS
+        // =================================================================== 
         // Global functions
         let game;
 
@@ -1529,6 +1604,9 @@
             document.getElementById('chapter-modal').style.display = 'none';
         }
 
+        // =================================================================== 
+        // EVENT LISTENERS
+        // =================================================================== 
         // Close modals when clicking outside
         document.addEventListener('click', (e) => {
             if (e.target.classList.contains('modal-overlay')) {
