@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letters to Alaska - Sliding Puzzle Adventure</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .game-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 90%;
+        }
+
+        h1 {
+            margin-bottom: 0.5rem;
+            font-size: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .level-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .level-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .level-progress {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .game-info {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        .info-item {
+            text-align: center;
+        }
+
+        .info-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .info-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 0.2rem;
+        }
+
+        .puzzle-board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            gap: 4px;
+            width: 320px;
+            height: 320px;
+            margin: 0 auto 1.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 15px;
+        }
+
+        .puzzle-board.size-3 {
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            width: 280px;
+            height: 280px;
+        }
+
+        .tile {
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            color: #333;
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            user-select: none;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .tile.image-tile {
+            background: none;
+            padding: 0;
+        }
+
+        .tile.image-tile img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .tile:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .tile.empty {
+            background: transparent;
+            box-shadow: none;
+            cursor: default;
+        }
+
+        .tile.empty:hover {
+            transform: none;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(145deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            min-width: 100px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn.secondary {
+            background: linear-gradient(145deg, #2196F3, #1976D2);
+        }
+
+        .btn.story {
+            background: linear-gradient(145deg, #FF9800, #F57C00);
+        }
+
+        .btn.small {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            min-width: 80px;
+        }
+
+        .audio-controls {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .volume-control input[type="range"] {
+            width: 80px;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            gap: 1rem;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal {
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            color: #333;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 1rem;
+        }
+
+        .modal h2 {
+            color: #333;
+            margin: 0;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            padding: 0.5rem;
+            border-radius: 50%;
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            background: #f0f0f0;
+        }
+
+        .story-content {
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .story-content p {
+            margin-bottom: 1rem;
+        }
+
+        .story-image {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 10px;
+            margin: 1rem auto;
+            display: block;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .level-selector {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+
+        .level-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .level-btn.completed {
+            background: linear-gradient(145deg, #4CAF50, #45a049);
+            border-color: #4CAF50;
+        }
+
+        .level-btn.current {
+            background: linear-gradient(145deg, #FF9800, #F57C00);
+            border-color: #FF9800;
+            transform: scale(1.1);
+        }
+
+        .level-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .level-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .image-mode-toggle {
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 480px) {
+            .puzzle-board {
+                width: 280px;
+                height: 280px;
+            }
+            
+            .game-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                min-width: 200px;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .audio-controls {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hidden audio elements -->
+    <audio id="background-music" loop>
+        <source src="audio/background.mp3" type="audio/mpeg">
+        <source src="audio/background.ogg" type="audio/ogg">
+    </audio>
+    <audio id="move-sound">
+        <source src="audio/move.mp3" type="audio/mpeg">
+        <source src="audio/move.wav" type="audio/wav">
+    </audio>
+    <audio id="complete-sound">
+        <source src="audio/complete.mp3" type="audio/mpeg">
+        <source src="audio/complete.wav" type="audio/wav">
+    </audio>
+
+    <div class="game-container">
+        <h1>Letters to Alaska</h1>
+        <p class="subtitle">A Sliding Puzzle Adventure</p>
+        
+        <div class="audio-controls">
+            <div class="volume-control">
+                <span>🎵</span>
+                <input type="range" id="music-volume" min="0" max="100" value="30">
+                <button class="btn small" id="music-toggle">🔊</button>
+            </div>
+            <div class="volume-control">
+                <span>🔊</span>
+                <input type="range" id="sfx-volume" min="0" max="100" value="50">
+                <button class="btn small" id="sfx-toggle">🔊</button>
+            </div>
+        </div>
+
+        <div class="image-mode-toggle">
+            <button class="btn small secondary" id="mode-toggle" onclick="toggleImageMode()">
+                📸 Picture Mode
+            </button>
+        </div>
+        
+        <div class="level-info">
+            <div class="level-title" id="level-title">Chapter 1: The Lost Garden</div>
+            <div class="level-progress" id="level-progress">1 / 8</div>
+        </div>
+
+        <div class="level-selector" id="level-selector">
+            <!-- Level buttons will be generated here -->
+        </div>
+        
+        <div class="game-info">
+            <div class="info-item">
+                <div class="info-label">Moves</div>
+                <div class="info-value" id="moves">0</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Time</div>
+                <div class="info-value" id="timer">00:00</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Chapter</div>
+                <div class="info-value" id="current-level">1</div>
+            </div>
+        </div>
+
+        <div class="puzzle-board" id="puzzle-board"></div>
+
+        <div class="controls">
+            <button class="btn" onclick="newPuzzle()">New Puzzle</button>
+            <button class="btn secondary" onclick="scramble()">Scramble</button>
+            <button class="btn story" onclick="showStory()" id="story-btn">📖 Read Story</button>
+        </div>
+
+        <div class="navigation">
+            <button class="btn secondary" onclick="previousLevel()" id="prev-btn">← Previous</button>
+            <button class="btn secondary" onclick="nextLevel()" id="next-btn">Next →</button>
+        </div>
+    </div>
+
+    <!-- Story Modal -->
+    <div class="modal-overlay" id="story-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="story-title">Chapter Title</h2>
+                <button class="close-btn" onclick="hideStory()">×</button>
+            </div>
+            <div class="story-content" id="story-content">
+                <!-- Story content will be inserted here -->
+            </div>
+            <div class="controls">
+                <button class="btn" onclick="hideStory()">Continue Adventure</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Victory Modal -->
+    <div class="modal-overlay" id="victory-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>🎉 Chapter Complete!</h2>
+                <button class="close-btn" onclick="hideVictory()">×</button>
+            </div>
+            <div class="story-content">
+                <p>You solved the puzzle in <strong><span id="final-moves"></span> moves</strong>!</p>
+                <p>Time: <strong><span id="final-time"></span></strong></p>
+                <div id="victory-story-content">
+                    <!-- Story content for this level -->
+                </div>
+            </div>
+            <div class="controls">
+                <button class="btn" onclick="hideVictory(); nextLevel();" id="continue-btn">Continue to Next Chapter</button>
+                <button class="btn secondary" onclick="hideVictory()">Stay Here</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Story data for each level (now with 8 chapters!)
+        const storyData = [
+            {
+                id: 1,
+                title: "Chapter 1: The Lost Garden",
+                difficulty: 3,
+                image: "images/garden.jpg", // Add your own image here
+                content: `
+                    <p>You find yourself standing at the entrance of an overgrown garden, where ancient stone tiles lie scattered across the ground. The air smells of forgotten roses and mystery.</p>
+                    <p>As you arrange the tiles in their proper order, you notice they form a path leading deeper into the garden. Each piece seems to whisper secrets of those who walked here before.</p>
+                    <p><em>"Every journey begins with a single step..."</em></p>
+                `
+            },
+            {
+                id: 2,
+                title: "Chapter 2: The Mountain Path",
+                difficulty: 4,
+                image: "images/mountain.jpg",
+                content: `
+                    <p>Following the garden path, you arrive at the foot of a towering mountain. Stone markers carved with ancient symbols block your way forward.</p>
+                    <p>The mountain spirits test travelers with puzzles of patience and wisdom. As you solve each arrangement, the path ahead becomes clearer, revealing glimpses of a distant cabin nestled in the peaks.</p>
+                    <p><em>"The higher you climb, the further you can see..."</em></p>
+                `
+            },
+            {
+                id: 3,
+                title: "Chapter 3: The Forest of Whispers",
+                difficulty: 4,
+                image: "images/forest.jpg",
+                content: `
+                    <p>Deep within the mountain's embrace lies an ancient forest where the trees seem to murmur forgotten stories. Leaves dance in patterns that mirror your puzzle arrangements.</p>
+                    <p>Each solved pattern awakens memories sleeping in the bark - tales of travelers who passed this way, carrying their own letters, their own dreams of distant Alaska.</p>
+                    <p><em>"The forest remembers every footstep, every whispered hope..."</em></p>
+                `
+            },
+            {
+                id: 4,
+                title: "Chapter 4: The Frozen Lake",
+                difficulty: 4,
+                image: "images/lake.jpg",
+                content: `
+                    <p>Beyond the whispering forest, you discover a perfectly frozen lake. Ice crystals form intricate patterns that shift and change as you watch.</p>
+                    <p>The surface reflects not just your image, but glimpses of memories - letters never sent, words never spoken. Each solved pattern reveals another fragment of the story that brought you here.</p>
+                    <p><em>"In the silence of winter, truth reveals itself..."</em></p>
+                `
+            },
+            {
+                id: 5,
+                title: "Chapter 5: The Northern Lights",
+                difficulty: 4,
+                image: "images/aurora.jpg",
+                content: `
+                    <p>As night falls, the aurora borealis dances across the sky in impossible colors. The lights seem to respond to your movements, creating patterns that match the puzzles before you.</p>
+                    <p>Each completed arrangement sends ripples of light across the heavens, as if the universe itself is acknowledging your journey. Alaska feels closer now, almost within reach.</p>
+                    <p><em>"Some destinations exist in the heart long before the feet arrive..."</em></p>
+                `
+            },
+            {
+                id: 6,
+                title: "Chapter 6: The Cabin in the Snow",
+                difficulty: 5,
+                image: "images/cabin.jpg",
+                content: `
+                    <p>Through the dancing lights, you spot a small cabin with smoke curling from its chimney. The final challenge awaits - a complex arrangement that seems to hold the key to your journey's end.</p>
+                    <p>Inside the cabin's warmth, you sense the presence of all those who came before, their stories woven into the very walls. Your letter is almost ready to be delivered.</p>
+                    <p><em>"Home is not a place, but a feeling of belonging..."</em></p>
+                `
+            },
+            {
+                id: 7,
+                title: "Chapter 7: The Letter Box",
+                difficulty: 5,
+                image: "images/mailbox.jpg",
+                content: `
+                    <p>Outside the cabin stands an ancient letter box, weathered by countless Alaskan storms yet still proudly serving its purpose. The final puzzle pieces swirl around it like snowflakes.</p>
+                    <p>Each arrangement brings you closer to understanding - this isn't just about delivering a letter, but about completing a connection that spans time, distance, and dreams.</p>
+                    <p><em>"Every letter carries a piece of the sender's soul..."</em></p>
+                `
+            },
+            {
+                id: 8,
+                title: "Chapter 8: Letters to Alaska",
+                difficulty: 5,
+                image: "images/alaska.jpg",
+                content: `
+                    <p>Finally, you reach the heart of Alaska where countless letters drift in the wind like snow. Each one carries the dreams, hopes, and longing of travelers who came before.</p>
+                    <p>As you complete the final puzzle, the letters arrange themselves into words of welcome. Alaska wasn't just a destination - it was a journey of the soul, a puzzle solved one piece at a time.</p>
+                    <p><em>"Welcome home, traveler. Your letters have found their way to Alaska."</em></p>
+                    <p><strong>🎉 Congratulations! You've completed your journey to Alaska! 🎉</strong></p>
+                `
+            }
+        ];
+
+        class StoryPuzzleGame {
+            constructor() {
+                this.board = [];
+                this.moves = 0;
+                this.startTime = null;
+                this.timerInterval = null;
+                this.currentLevel = 1;
+                this.emptyPos = { row: 0, col: 0 };
+                this.gameProgress = this.loadProgress();
+                this.imageMode = false;
+                this.currentImage = null;
+                this.imageSlices = [];
+                
+                this.initAudio();
+                this.init();
+            }
+
+            initAudio() {
+                this.backgroundMusic = document.getElementById('background-music');
+                this.moveSound = document.getElementById('move-sound');
+                this.completeSound = document.getElementById('complete-sound');
+                
+                // Set up volume controls
+                const musicVolumeSlider = document.getElementById('music-volume');
+                const sfxVolumeSlider = document.getElementById('sfx-volume');
+                const musicToggle = document.getElementById('music-toggle');
+                const sfxToggle = document.getElementById('sfx-toggle');
+                
+                // Load saved volume settings
+                const savedMusicVolume = localStorage.getItem('music-volume') || 30;
+                const savedSfxVolume = localStorage.getItem('sfx-volume') || 50;
+                const musicEnabled = localStorage.getItem('music-enabled') !== 'false';
+                const sfxEnabled = localStorage.getItem('sfx-enabled') !== 'false';
+                
+                musicVolumeSlider.value = savedMusicVolume;
+                sfxVolumeSlider.value = savedSfxVolume;
+                this.backgroundMusic.volume = savedMusicVolume / 100;
+                this.moveSound.volume = savedSfxVolume / 100;
+                this.completeSound.volume = savedSfxVolume / 100;
+                
+                this.musicEnabled = musicEnabled;
+                this.sfxEnabled = sfxEnabled;
+                
+                // Set up event listeners
+                musicVolumeSlider.addEventListener('input', (e) => {
+                    this.backgroundMusic.volume = e.target.value / 100;
+                    localStorage.setItem('music-volume', e.target.value);
+                });
+                
+                sfxVolumeSlider.addEventListener('input', (e) => {
+                    const volume = e.target.value / 100;
+                    this.moveSound.volume = volume;
+                    this.completeSound.volume = volume;
+                    localStorage.setItem('sfx-volume', e.target.value);
+                });
+                
+                musicToggle.addEventListener('click', () => {
+                    this.musicEnabled = !this.musicEnabled;
+                    localStorage.setItem('music-enabled', this.musicEnabled);
+                    musicToggle.textContent = this.musicEnabled ? '🔊' : '🔇';
+                    if (this.musicEnabled) {
+                        this.backgroundMusic.play().catch(() => {});
+                    } else {
+                        this.backgroundMusic.pause();
+                    }
+                });
+                
+                sfxToggle.addEventListener('click', () => {
+                    this.sfxEnabled = !this.sfxEnabled;
+                    localStorage.setItem('sfx-enabled', this.sfxEnabled);
+                    sfxToggle.textContent = this.sfxEnabled ? '🔊' : '🔇';
+                });
+                
+                // Update toggle button states
+                musicToggle.textContent = this.musicEnabled ? '🔊' : '🔇';
+                sfxToggle.textContent = this.sfxEnabled ? '🔊' : '🔇';
+                
+                // Start background music (user interaction will be required)
+                document.addEventListener('click', () => {
+                    if (this.musicEnabled && this.backgroundMusic.paused) {
+                        this.backgroundMusic.play().catch(() => {});
+                    }
+                }, { once: true });
+            }
+
+            playSound(soundElement) {
+                if (this.sfxEnabled && soundElement) {
+                    soundElement.currentTime = 0;
+                    soundElement.play().catch(() => {});
+                }
+            }
+
+            init() {
+                this.updateLevelDisplay();
+                this.createLevelSelector();
+                this.loadLevel(this.currentLevel);
+            }
+
+            get currentStory() {
+                return storyData[this.currentLevel - 1];
+            }
+
+            get boardSize() {
+                return this.currentStory.difficulty;
+            }
+
+            loadProgress() {
+                const saved = localStorage.getItem('letters-to-alaska-progress');
+                if (saved) {
+                    return JSON.parse(saved);
+                }
+                return {
+                    unlockedLevels: 1,
+                    completedLevels: [],
+                    currentLevel: 1
+                };
+            }
+
+            saveProgress() {
+                localStorage.setItem('letters-to-alaska-progress', JSON.stringify(this.gameProgress));
+            }
+
+            createLevelSelector() {
+                const selector = document.getElementById('level-selector');
+                selector.innerHTML = '';
+                
+                for (let i = 1; i <= storyData.length; i++) {
+                    const btn = document.createElement('button');
+                    btn.className = 'level-btn';
+                    btn.textContent = i;
+                    btn.onclick = () => this.loadLevel(i);
+                    
+                    if (i > this.gameProgress.unlockedLevels) {
+                        btn.disabled = true;
+                    } else if (this.gameProgress.completedLevels.includes(i)) {
+                        btn.classList.add('completed');
+                    }
+                    
+                    if (i === this.currentLevel) {
+                        btn.classList.add('current');
+                    }
+                    
+                    selector.appendChild(btn);
+                }
+            }
+
+            async loadLevel(levelNum) {
+                if (levelNum < 1 || levelNum > storyData.length || levelNum > this.gameProgress.unlockedLevels) {
+                    return;
+                }
+                
+                this.currentLevel = levelNum;
+                this.gameProgress.currentLevel = levelNum;
+                this.saveProgress();
+                
+                this.updateLevelDisplay();
+                this.createLevelSelector();
+                
+                // Load image if in image mode
+                if (this.imageMode && this.currentStory.image) {
+                    await this.loadImage(this.currentStory.image);
+                }
+                
+                this.createSolvedBoard();
+                this.scramble();
+                this.updateNavigationButtons();
+            }
+
+            async loadImage(imagePath) {
+                return new Promise((resolve, reject) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        this.currentImage = img;
+                        this.createImageSlices();
+                        resolve();
+                    };
+                    img.onerror = () => {
+                        console.warn(`Could not load image: ${imagePath}`);
+                        this.imageMode = false;
+                        this.updateModeToggle();
+                        resolve();
+                    };
+                    img.src = imagePath;
+                });
+            }
+
+            createImageSlices() {
+                if (!this.currentImage) return;
+                
+                const size = this.boardSize;
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                const tileSize = 80; // Size of each tile
+                canvas.width = tileSize;
+                canvas.height = tileSize;
+                
+                this.imageSlices = [];
+                
+                for (let row = 0; row < size; row++) {
+                    for (let col = 0; col < size; col++) {
+                        // Skip the last tile (empty space)
+                        if (row === size - 1 && col === size - 1) continue;
+                        
+                        ctx.clearRect(0, 0, tileSize, tileSize);
+                        
+                        // Calculate source position from the image
+                        const sourceX = (col / size) * this.currentImage.width;
+                        const sourceY = (row / size) * this.currentImage.height;
+                        const sourceWidth = this.currentImage.width / size;
+                        const sourceHeight = this.currentImage.height / size;
+                        
+                        // Draw the slice
+                        ctx.drawImage(
+                            this.currentImage,
+                            sourceX, sourceY, sourceWidth, sourceHeight,
+                            0, 0, tileSize, tileSize
+                        );
+                        
+                        // Store the slice as a data URL
+                        const tileNumber = row * size + col + 1;
+                        this.imageSlices[tileNumber] = canvas.toDataURL();
+                    }
+                }
+            }
+
+            updateLevelDisplay() {
+                const story = this.currentStory;
+                document.getElementById('level-title').textContent = story.title;
+                document.getElementById('level-progress').textContent = `${this.currentLevel} / ${storyData.length}`;
+                document.getElementById('current-level').textContent = this.currentLevel;
+                
+                // Update puzzle board size
+                const board = document.getElementById('puzzle-board');
+                board.className = `puzzle-board size-${this.boardSize}`;
+                
+                // Update story button
+                const storyBtn = document.getElementById('story-btn');
+                const isCompleted = this.gameProgress.completedLevels.includes(this.currentLevel);
+                storyBtn.textContent = isCompleted ? '📖 Read Story' : '🔒 Complete Puzzle';
+                storyBtn.disabled = !isCompleted;
+            }
+
+            updateNavigationButtons() {
+                const prevBtn = document.getElementById('prev-btn');
+                const nextBtn = document.getElementById('next-btn');
+                
+                prevBtn.disabled = this.currentLevel <= 1;
+                nextBtn.disabled = this.currentLevel >= this.gameProgress.unlockedLevels;
+            }
+
+            updateModeToggle() {
+                const toggle = document.getElementById('mode-toggle');
+                toggle.textContent = this.imageMode ? '🔢 Number Mode' : '📸 Picture Mode';
+            }
+
+            async toggleImageMode() {
+                this.imageMode = !this.imageMode;
+                this.updateModeToggle();
+                
+                if (this.imageMode && this.currentStory.image) {
+                    await this.loadImage(this.currentStory.image);
+                }
+                
+                this.render();
+            }
+
+            createSolvedBoard() {
+                this.board = [];
+                let num = 1;
+                const size = this.boardSize;
+                
+                for (let row = 0; row < size; row++) {
+                    this.board[row] = [];
+                    for (let col = 0; col < size; col++) {
+                        if (row === size - 1 && col === size - 1) {
+                            this.board[row][col] = 0; // Empty space
+                        } else {
+                            this.board[row][col] = num++;
+                        }
+                    }
+                }
+                this.emptyPos = { row: size - 1, col: size - 1 };
+            }
+
+            render() {
+                const boardElement = document.getElementById('puzzle-board');
+                boardElement.innerHTML = '';
+                const size = this.boardSize;
+
+                for (let row = 0; row < size; row++) {
+                    for (let col = 0; col < size; col++) {
+                        const tile = document.createElement('div');
+                        tile.className = 'tile';
+                        
+                        if (this.board[row][col] === 0) {
+                            tile.className += ' empty';
+                        } else {
+                            if (this.imageMode && this.imageSlices[this.board[row][col]]) {
+                                tile.className += ' image-tile';
+                                const img = document.createElement('img');
+                                img.src = this.imageSlices[this.board[row][col]];
+                                img.alt = `Piece ${this.board[row][col]}`;
+                                tile.appendChild(img);
+                            } else {
+                                tile.textContent = this.board[row][col];
+                            }
+                            tile.onclick = () => this.moveTile(row, col);
+                        }
+                        
+                        boardElement.appendChild(tile);
+                    }
+                }
+
+                document.getElementById('moves').textContent = this.moves;
+            }
+
+            moveTile(row, col) {
+                if (!this.isAdjacent(row, col, this.emptyPos.row, this.emptyPos.col)) {
+                    return;
+                }
+
+                // Start timer on first move
+                if (this.moves === 0 && !this.startTime) {
+                    this.startTimer();
+                }
+
+                // Play move sound
+                this.playSound(this.moveSound);
+
+                // Swap tile with empty space
+                this.board[this.emptyPos.row][this.emptyPos.col] = this.board[row][col];
+                this.board[row][col] = 0;
+                this.emptyPos = { row, col };
+                
+                this.moves++;
+                this.render();
+
+                if (this.isSolved()) {
+                    this.stopTimer();
+                    this.completeLevel();
+                }
+            }
+
+            completeLevel() {
+                // Play completion sound
+                this.playSound(this.completeSound);
+                
+                // Mark level as completed
+                if (!this.gameProgress.completedLevels.includes(this.currentLevel)) {
+                    this.gameProgress.completedLevels.push(this.currentLevel);
+                }
+                
+                // Unlock next level
+                if (this.currentLevel >= this.gameProgress.unlockedLevels) {
+                    this.gameProgress.unlockedLevels = Math.min(this.currentLevel + 1, storyData.length);
+                }
+                
+                this.saveProgress();
+                this.updateLevelDisplay();
+                this.createLevelSelector();
+                this.showVictory();
+            }
+
+            isAdjacent(row1, col1, row2, col2) {
+                const rowDiff = Math.abs(row1 - row2);
+                const colDiff = Math.abs(col1 - col2);
+                return (rowDiff === 1 && colDiff === 0) || (rowDiff === 0 && colDiff === 1);
+            }
+
+            isSolved() {
+                let num = 1;
+                const size = this.boardSize;
+                for (let row = 0; row < size; row++) {
+                    for (let col = 0; col < size; col++) {
+                        if (row === size - 1 && col === size - 1) {
+                            return this.board[row][col] === 0;
+                        }
+                        if (this.board[row][col] !== num++) {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+
+            scramble() {
+                const size = this.boardSize;
+                // Make random valid moves to scramble
+                for (let i = 0; i < size * size * 5; i++) {
+                    const adjacentTiles = this.getAdjacentTiles();
+                    if (adjacentTiles.length > 0) {
+                        const randomTile = adjacentTiles[Math.floor(Math.random() * adjacentTiles.length)];
+                        this.board[this.emptyPos.row][this.emptyPos.col] = this.board[randomTile.row][randomTile.col];
+                        this.board[randomTile.row][randomTile.col] = 0;
+                        this.emptyPos = randomTile;
+                    }
+                }
+                
+                this.moves = 0;
+                this.startTime = null;
+                this.render();
+                this.stopTimer();
+                document.getElementById('timer').textContent = '00:00';
+            }
+
+            getAdjacentTiles() {
+                const adjacent = [];
+                const directions = [
+                    { row: -1, col: 0 }, { row: 1, col: 0 },
+                    { row: 0, col: -1 }, { row: 0, col: 1 }
+                ];
+
+                for (const dir of directions) {
+                    const newRow = this.emptyPos.row + dir.row;
+                    const newCol = this.emptyPos.col + dir.col;
+                    
+                    if (newRow >= 0 && newRow < this.boardSize && newCol >= 0 && newCol < this.boardSize) {
+                        adjacent.push({ row: newRow, col: newCol });
+                    }
+                }
+
+                return adjacent;
+            }
+
+            startTimer() {
+                this.startTime = Date.now();
+                this.timerInterval = setInterval(() => {
+                    const elapsed = Date.now() - this.startTime;
+                    const minutes = Math.floor(elapsed / 60000);
+                    const seconds = Math.floor((elapsed % 60000) / 1000);
+                    document.getElementById('timer').textContent = 
+                        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                }, 1000);
+            }
+
+            stopTimer() {
+                if (this.timerInterval) {
+                    clearInterval(this.timerInterval);
+                    this.timerInterval = null;
+                }
+            }
+
+            showVictory() {
+                const elapsed = Date.now() - this.startTime;
+                const minutes = Math.floor(elapsed / 60000);
+                const seconds = Math.floor((elapsed % 60000) / 1000);
+                const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                document.getElementById('final-moves').textContent = this.moves;
+                document.getElementById('final-time').textContent = timeString;
+                
+                // Show story content in victory modal
+                const storyContent = document.getElementById('victory-story-content');
+                storyContent.innerHTML = this.currentStory.content;
+                
+                // Update continue button
+                const continueBtn = document.getElementById('continue-btn');
+                if (this.currentLevel >= storyData.length) {
+                    continueBtn.textContent = '🎉 Adventure Complete!';
+                    continueBtn.onclick = () => hideVictory();
+                } else {
+                    continueBtn.textContent = 'Continue to Next Chapter';
+                    continueBtn.onclick = () => { hideVictory(); nextLevel(); };
+                }
+                
+                document.getElementById('victory-modal').style.display = 'flex';
+            }
+
+            showStory() {
+                if (!this.gameProgress.completedLevels.includes(this.currentLevel)) {
+                    return;
+                }
+                
+                const story = this.currentStory;
+                document.getElementById('story-title').textContent = story.title;
+                document.getElementById('story-content').innerHTML = story.content;
+                document.getElementById('story-modal').style.display = 'flex';
+            }
+        }
+
+        // Global functions
+        let game;
+
+        function initGame() {
+            game = new StoryPuzzleGame();
+        }
+
+        function newPuzzle() {
+            game.stopTimer();
+            game.createSolvedBoard();
+            game.moves = 0;
+            game.startTime = null;
+            game.render();
+            game.scramble();
+            document.getElementById('timer').textContent = '00:00';
+        }
+
+        function scramble() {
+            game.scramble();
+        }
+
+        function previousLevel() {
+            if (game.currentLevel > 1) {
+                game.loadLevel(game.currentLevel - 1);
+            }
+        }
+
+        function nextLevel() {
+            if (game.currentLevel < game.gameProgress.unlockedLevels) {
+                game.loadLevel(game.currentLevel + 1);
+            }
+        }
+
+        function toggleImageMode() {
+            game.toggleImageMode();
+        }
+
+        function showStory() {
+            game.showStory();
+        }
+
+        function hideStory() {
+            document.getElementById('story-modal').style.display = 'none';
+        }
+
+        function hideVictory() {
+            document.getElementById('victory-modal').style.display = 'none';
+        }
+
+        // Close modals when clicking outside
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal-overlay')) {
+                e.target.style.display = 'none';
+            }
+        });
+
+        // Initialize game when page loads
+        window.addEventListener('DOMContentLoaded', initGame);
+    </script>
+</body>
+</html>
