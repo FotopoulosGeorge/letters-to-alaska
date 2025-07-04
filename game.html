@@ -22,6 +22,54 @@
             color: white;
         }
 
+        .screen {
+            display: none;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        .start-screen {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .start-screen h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .start-screen .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .start-screen .description {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .start-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
         .game-container {
             text-align: center;
             background: rgba(255, 255, 255, 0.1);
@@ -33,16 +81,41 @@
             width: 90%;
         }
 
-        h1 {
-            margin-bottom: 0.5rem;
-            font-size: 2rem;
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .game-header h1 {
+            font-size: 1.5rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
-        .subtitle {
-            opacity: 0.8;
-            margin-bottom: 1.5rem;
-            font-style: italic;
+        .header-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .icon-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.2s ease;
+        }
+
+        .icon-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
         }
 
         .level-info {
@@ -198,30 +271,16 @@
             background: linear-gradient(145deg, #FF9800, #F57C00);
         }
 
+        .btn.large {
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            min-width: 200px;
+        }
+
         .btn.small {
             padding: 0.5rem 1rem;
             font-size: 0.9rem;
             min-width: 80px;
-        }
-
-        .audio-controls {
-            display: flex;
-            gap: 0.5rem;
-            justify-content: center;
-            margin-bottom: 1rem;
-        }
-
-        .volume-control {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-        }
-
-        .volume-control input[type="range"] {
-            width: 80px;
         }
 
         .navigation {
@@ -349,11 +408,122 @@
             cursor: not-allowed;
         }
 
-        .image-mode-toggle {
+        .chapter-selection {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .chapter-selection h3 {
+            text-align: center;
             margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .chapter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .chapter-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+
+        .chapter-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .chapter-card.completed {
+            border-color: #4CAF50;
+            background: rgba(76, 175, 80, 0.2);
+        }
+
+        .chapter-card.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .chapter-card .chapter-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .chapter-card .chapter-title {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .settings-content {
+            padding: 1rem 0;
+        }
+
+        .setting-group {
+            margin-bottom: 2rem;
+        }
+
+        .setting-group h3 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .setting-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding: 0.5rem 0;
+        }
+
+        .setting-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .setting-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .setting-control input[type="range"] {
+            width: 100px;
+        }
+
+        .toggle-btn {
+            background: #ccc;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .toggle-btn.active {
+            background: #4CAF50;
+            color: white;
         }
 
         @media (max-width: 480px) {
+            .start-screen {
+                padding: 2rem 1rem;
+            }
+            
+            .start-screen h1 {
+                font-size: 2rem;
+            }
+            
             .puzzle-board {
                 width: 280px;
                 height: 280px;
@@ -377,8 +547,8 @@
                 flex-direction: column;
             }
 
-            .audio-controls {
-                flex-direction: column;
+            .chapter-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
@@ -398,27 +568,41 @@
         <source src="audio/complete.wav" type="audio/wav">
     </audio>
 
-    <div class="game-container">
+    <!-- Start Screen -->
+    <div class="screen start-screen active" id="start-screen">
         <h1>Letters to Alaska</h1>
         <p class="subtitle">A Sliding Puzzle Adventure</p>
+        <p class="description">
+            Journey through 8 captivating chapters, each telling a story of adventure, mystery, and discovery. 
+            Solve sliding puzzles to unlock the path to Alaska and uncover the secrets that await.
+        </p>
         
-        <div class="audio-controls">
-            <div class="volume-control">
-                <span>🎵</span>
-                <input type="range" id="music-volume" min="0" max="100" value="30">
-                <button class="btn small" id="music-toggle">🔊</button>
+        <div class="start-menu">
+            <button class="btn large" onclick="startGame()">🎮 Start Adventure</button>
+            <button class="btn large secondary" onclick="showChapterSelection()">📚 Select Chapter</button>
+            <button class="btn large secondary" onclick="showSettings()">⚙️ Settings</button>
+        </div>
+        
+        <div class="chapter-selection" id="chapter-selection" style="display: none;">
+            <h3>🗺️ Choose Your Chapter</h3>
+            <div class="chapter-grid" id="chapter-grid">
+                <!-- Chapter cards will be generated here -->
             </div>
-            <div class="volume-control">
-                <span>🔊</span>
-                <input type="range" id="sfx-volume" min="0" max="100" value="50">
-                <button class="btn small" id="sfx-toggle">🔊</button>
+            <div class="controls">
+                <button class="btn secondary" onclick="hideChapterSelection()">Back to Menu</button>
             </div>
         </div>
+    </div>
 
-        <div class="image-mode-toggle">
-            <button class="btn small secondary" id="mode-toggle" onclick="toggleImageMode()">
-                📸 Picture Mode
-            </button>
+    <!-- Game Screen -->
+    <div class="screen game-container" id="game-screen">
+        <div class="game-header">
+            <h1>Letters to Alaska</h1>
+            <div class="header-buttons">
+                <button class="icon-btn" onclick="showChapterModal()" title="Chapter Selection">📚</button>
+                <button class="icon-btn" onclick="showSettings()" title="Settings">⚙️</button>
+                <button class="icon-btn" onclick="showStartScreen()" title="Main Menu">🏠</button>
+            </div>
         </div>
         
         <div class="level-info">
@@ -451,6 +635,9 @@
             <button class="btn" onclick="newPuzzle()">New Puzzle</button>
             <button class="btn secondary" onclick="scramble()">Scramble</button>
             <button class="btn story" onclick="showStory()" id="story-btn">📖 Read Story</button>
+            <button class="btn small secondary" id="mode-toggle" onclick="toggleImageMode()">
+                📸 Picture Mode
+            </button>
         </div>
 
         <div class="navigation">
@@ -459,6 +646,70 @@
         </div>
     </div>
 
+    <!-- Settings Modal -->
+    <div class="modal-overlay" id="settings-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>⚙️ Settings</h2>
+                <button class="close-btn" onclick="hideSettings()">×</button>
+            </div>
+            <div class="settings-content">
+                <div class="setting-group">
+                    <h3>🎵 Audio Settings</h3>
+                    <div class="setting-item">
+                        <div class="setting-label">
+                            <span>Background Music</span>
+                        </div>
+                        <div class="setting-control">
+                            <input type="range" id="music-volume" min="0" max="100" value="30">
+                            <button class="toggle-btn" id="music-toggle">🔊</button>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-label">
+                            <span>Sound Effects</span>
+                        </div>
+                        <div class="setting-control">
+                            <input type="range" id="sfx-volume" min="0" max="100" value="50">
+                            <button class="toggle-btn" id="sfx-toggle">🔊</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="setting-group">
+                    <h3>🎮 Game Settings</h3>
+                    <div class="setting-item">
+                        <div class="setting-label">
+                            <span>Auto-scramble on level start</span>
+                        </div>
+                        <div class="setting-control">
+                            <button class="toggle-btn" id="auto-scramble-toggle">ON</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="controls">
+                <button class="btn" onclick="hideSettings()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chapter Selection Modal -->
+    <div class="modal-overlay" id="chapter-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>📚 Select Chapter</h2>
+                <button class="close-btn" onclick="hideChapterModal()">×</button>
+            </div>
+            <div class="chapter-selection">
+                <div class="chapter-grid" id="chapter-grid-modal">
+                    <!-- Chapter cards will be generated here -->
+                </div>
+            </div>
+            <div class="controls">
+                <button class="btn secondary" onclick="hideChapterModal()">Close</button>
+            </div>
+        </div>
+    </div>
     <!-- Story Modal -->
     <div class="modal-overlay" id="story-modal">
         <div class="modal">
@@ -502,6 +753,7 @@
             {
                 id: 1,
                 title: "Chapter 1: The Lost Garden",
+                shortTitle: "Lost Garden",
                 difficulty: 3,
                 image: "images/garden.jpg", 
                 content: `
@@ -513,6 +765,7 @@
             {
                 id: 2,
                 title: "Chapter 2: The Mountain Path",
+                shortTitle: "Mountain Path",
                 difficulty: 4,
                 image: "images/mountain.jpg",
                 content: `
@@ -524,6 +777,7 @@
             {
                 id: 3,
                 title: "Chapter 3: The Forest of Whispers",
+                shortTitle: "Forest of Whispers",
                 difficulty: 4,
                 image: "images/forest.jpg",
                 content: `
@@ -535,6 +789,7 @@
             {
                 id: 4,
                 title: "Chapter 4: The Frozen Lake",
+                shortTitle: "Frozen Lake",
                 difficulty: 4,
                 image: "images/lake.jpg",
                 content: `
@@ -546,6 +801,7 @@
             {
                 id: 5,
                 title: "Chapter 5: The Northern Lights",
+                shortTitle: "Northern Lights",
                 difficulty: 4,
                 image: "images/aurora.jpg",
                 content: `
@@ -557,6 +813,7 @@
             {
                 id: 6,
                 title: "Chapter 6: The Cabin in the Snow",
+                shortTitle: "Cabin in Snow",
                 difficulty: 5,
                 image: "images/cabin.jpg",
                 content: `
@@ -568,6 +825,7 @@
             {
                 id: 7,
                 title: "Chapter 7: The Letter Box",
+                shortTitle: "Letter Box",
                 difficulty: 5,
                 image: "images/mailbox.jpg",
                 content: `
@@ -579,6 +837,7 @@
             {
                 id: 8,
                 title: "Chapter 8: Letters to Alaska",
+                shortTitle: "Letters to Alaska",
                 difficulty: 5,
                 image: "images/alaska.jpg",
                 content: `
@@ -602,9 +861,44 @@
                 this.imageMode = false;
                 this.currentImage = null;
                 this.imageSlices = [];
+                this.settings = this.loadSettings();
                 
                 this.initAudio();
+                this.initSettings();
                 this.init();
+            }
+
+            loadSettings() {
+                const defaultSettings = {
+                    autoScramble: true,
+                    musicVolume: 30,
+                    sfxVolume: 50,
+                    musicEnabled: true,
+                    sfxEnabled: true
+                };
+                
+                const saved = localStorage.getItem('letters-to-alaska-settings');
+                if (saved) {
+                    return { ...defaultSettings, ...JSON.parse(saved) };
+                }
+                return defaultSettings;
+            }
+
+            saveSettings() {
+                localStorage.setItem('letters-to-alaska-settings', JSON.stringify(this.settings));
+            }
+
+            initSettings() {
+                // Auto-scramble toggle
+                const autoScrambleToggle = document.getElementById('auto-scramble-toggle');
+                autoScrambleToggle.textContent = this.settings.autoScramble ? 'ON' : 'OFF';
+                autoScrambleToggle.className = this.settings.autoScramble ? 'toggle-btn active' : 'toggle-btn';
+                autoScrambleToggle.onclick = () => {
+                    this.settings.autoScramble = !this.settings.autoScramble;
+                    autoScrambleToggle.textContent = this.settings.autoScramble ? 'ON' : 'OFF';
+                    autoScrambleToggle.className = this.settings.autoScramble ? 'toggle-btn active' : 'toggle-btn';
+                    this.saveSettings();
+                };
             }
 
             initAudio() {
@@ -618,39 +912,34 @@
                 const musicToggle = document.getElementById('music-toggle');
                 const sfxToggle = document.getElementById('sfx-toggle');
                 
-                // Load saved volume settings
-                const savedMusicVolume = localStorage.getItem('music-volume') || 30;
-                const savedSfxVolume = localStorage.getItem('sfx-volume') || 50;
-                const musicEnabled = localStorage.getItem('music-enabled') !== 'false';
-                const sfxEnabled = localStorage.getItem('sfx-enabled') !== 'false';
-                
-                musicVolumeSlider.value = savedMusicVolume;
-                sfxVolumeSlider.value = savedSfxVolume;
-                this.backgroundMusic.volume = savedMusicVolume / 100;
-                this.moveSound.volume = savedSfxVolume / 100;
-                this.completeSound.volume = savedSfxVolume / 100;
-                
-                this.musicEnabled = musicEnabled;
-                this.sfxEnabled = sfxEnabled;
+                // Apply settings
+                musicVolumeSlider.value = this.settings.musicVolume;
+                sfxVolumeSlider.value = this.settings.sfxVolume;
+                this.backgroundMusic.volume = this.settings.musicVolume / 100;
+                this.moveSound.volume = this.settings.sfxVolume / 100;
+                this.completeSound.volume = this.settings.sfxVolume / 100;
                 
                 // Set up event listeners
                 musicVolumeSlider.addEventListener('input', (e) => {
-                    this.backgroundMusic.volume = e.target.value / 100;
-                    localStorage.setItem('music-volume', e.target.value);
+                    this.settings.musicVolume = parseInt(e.target.value);
+                    this.backgroundMusic.volume = this.settings.musicVolume / 100;
+                    this.saveSettings();
                 });
                 
                 sfxVolumeSlider.addEventListener('input', (e) => {
-                    const volume = e.target.value / 100;
-                    this.moveSound.volume = volume;
-                    this.completeSound.volume = volume;
-                    localStorage.setItem('sfx-volume', e.target.value);
+                    this.settings.sfxVolume = parseInt(e.target.value);
+                    this.moveSound.volume = this.settings.sfxVolume / 100;
+                    this.completeSound.volume = this.settings.sfxVolume / 100;
+                    this.saveSettings();
                 });
                 
                 musicToggle.addEventListener('click', () => {
-                    this.musicEnabled = !this.musicEnabled;
-                    localStorage.setItem('music-enabled', this.musicEnabled);
-                    musicToggle.textContent = this.musicEnabled ? '🔊' : '🔇';
-                    if (this.musicEnabled) {
+                    this.settings.musicEnabled = !this.settings.musicEnabled;
+                    musicToggle.textContent = this.settings.musicEnabled ? '🔊' : '🔇';
+                    musicToggle.className = this.settings.musicEnabled ? 'toggle-btn active' : 'toggle-btn';
+                    this.saveSettings();
+                    
+                    if (this.settings.musicEnabled) {
                         this.backgroundMusic.play().catch(() => {});
                     } else {
                         this.backgroundMusic.pause();
@@ -658,34 +947,70 @@
                 });
                 
                 sfxToggle.addEventListener('click', () => {
-                    this.sfxEnabled = !this.sfxEnabled;
-                    localStorage.setItem('sfx-enabled', this.sfxEnabled);
-                    sfxToggle.textContent = this.sfxEnabled ? '🔊' : '🔇';
+                    this.settings.sfxEnabled = !this.settings.sfxEnabled;
+                    sfxToggle.textContent = this.settings.sfxEnabled ? '🔊' : '🔇';
+                    sfxToggle.className = this.settings.sfxEnabled ? 'toggle-btn active' : 'toggle-btn';
+                    this.saveSettings();
                 });
                 
                 // Update toggle button states
-                musicToggle.textContent = this.musicEnabled ? '🔊' : '🔇';
-                sfxToggle.textContent = this.sfxEnabled ? '🔊' : '🔇';
+                musicToggle.textContent = this.settings.musicEnabled ? '🔊' : '🔇';
+                musicToggle.className = this.settings.musicEnabled ? 'toggle-btn active' : 'toggle-btn';
+                sfxToggle.textContent = this.settings.sfxEnabled ? '🔊' : '🔇';
+                sfxToggle.className = this.settings.sfxEnabled ? 'toggle-btn active' : 'toggle-btn';
                 
                 // Start background music (user interaction will be required)
                 document.addEventListener('click', () => {
-                    if (this.musicEnabled && this.backgroundMusic.paused) {
+                    if (this.settings.musicEnabled && this.backgroundMusic.paused) {
                         this.backgroundMusic.play().catch(() => {});
                     }
                 }, { once: true });
             }
 
             playSound(soundElement) {
-                if (this.sfxEnabled && soundElement) {
+                if (this.settings.sfxEnabled && soundElement) {
                     soundElement.currentTime = 0;
                     soundElement.play().catch(() => {});
                 }
             }
 
             init() {
+                this.createChapterGrid();
                 this.updateLevelDisplay();
                 this.createLevelSelector();
                 this.loadLevel(this.currentLevel);
+            }
+
+            createChapterGrid() {
+                const grid = document.getElementById('chapter-grid');
+                grid.innerHTML = '';
+                
+                storyData.forEach((chapter, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'chapter-card';
+                    
+                    const chapterNum = index + 1;
+                    
+                    if (chapterNum > this.gameProgress.unlockedLevels) {
+                        card.classList.add('locked');
+                    } else if (this.gameProgress.completedLevels.includes(chapterNum)) {
+                        card.classList.add('completed');
+                    }
+                    
+                    card.innerHTML = `
+                        <div class="chapter-number">${chapterNum}</div>
+                        <div class="chapter-title">${chapter.shortTitle}</div>
+                    `;
+                    
+                    if (chapterNum <= this.gameProgress.unlockedLevels) {
+                        card.onclick = () => {
+                            this.loadLevel(chapterNum);
+                            this.showGameScreen();
+                        };
+                    }
+                    
+                    grid.appendChild(card);
+                });
             }
 
             get currentStory() {
@@ -747,6 +1072,7 @@
                 
                 this.updateLevelDisplay();
                 this.createLevelSelector();
+                this.createChapterGrid();
                 
                 // Load image if in image mode
                 if (this.imageMode && this.currentStory.image) {
@@ -754,7 +1080,13 @@
                 }
                 
                 this.createSolvedBoard();
-                this.scramble();
+                
+                if (this.settings.autoScramble) {
+                    this.scramble();
+                } else {
+                    this.render();
+                }
+                
                 this.updateNavigationButtons();
             }
 
@@ -951,6 +1283,7 @@
                 this.saveProgress();
                 this.updateLevelDisplay();
                 this.createLevelSelector();
+                this.createChapterGrid();
                 this.showVictory();
             }
 
@@ -1069,6 +1402,50 @@
                 document.getElementById('story-content').innerHTML = story.content;
                 document.getElementById('story-modal').style.display = 'flex';
             }
+
+            showGameScreen() {
+                document.getElementById('start-screen').classList.remove('active');
+                document.getElementById('game-screen').classList.add('active');
+            }
+
+            showStartScreen() {
+                document.getElementById('game-screen').classList.remove('active');
+                document.getElementById('start-screen').classList.add('active');
+                this.hideChapterSelection();
+            }
+
+            showChapterSelection() {
+                document.getElementById('chapter-selection').style.display = 'block';
+            }
+
+            hideChapterSelection() {
+                document.getElementById('chapter-selection').style.display = 'none';
+            }
+
+            showChapterModal() {
+                // Copy chapter grid to modal
+                const originalGrid = document.getElementById('chapter-grid');
+                const modalGrid = document.getElementById('chapter-grid-modal');
+                modalGrid.innerHTML = originalGrid.innerHTML;
+                
+                // Update click handlers for modal
+                const cards = modalGrid.querySelectorAll('.chapter-card:not(.locked)');
+                cards.forEach((card, index) => {
+                    const chapterNum = index + 1;
+                    if (chapterNum <= game.gameProgress.unlockedLevels) {
+                        card.onclick = () => {
+                            game.loadLevel(chapterNum);
+                            hideChapterModal();
+                        };
+                    }
+                });
+                
+                document.getElementById('chapter-modal').style.display = 'flex';
+            }
+
+            hideChapterModal() {
+                document.getElementById('chapter-modal').style.display = 'none';
+            }
         }
 
         // Global functions
@@ -1076,6 +1453,30 @@
 
         function initGame() {
             game = new StoryPuzzleGame();
+        }
+
+        function startGame() {
+            game.showGameScreen();
+        }
+
+        function showStartScreen() {
+            game.showStartScreen();
+        }
+
+        function showChapterSelection() {
+            game.showChapterSelection();
+        }
+
+        function hideChapterSelection() {
+            game.hideChapterSelection();
+        }
+
+        function showSettings() {
+            document.getElementById('settings-modal').style.display = 'flex';
+        }
+
+        function hideSettings() {
+            document.getElementById('settings-modal').style.display = 'none';
         }
 
         function newPuzzle() {
@@ -1118,6 +1519,14 @@
 
         function hideVictory() {
             document.getElementById('victory-modal').style.display = 'none';
+        }
+
+        function showChapterModal() {
+            game.showChapterModal();
+        }
+
+        function hideChapterModal() {
+            document.getElementById('chapter-modal').style.display = 'none';
         }
 
         // Close modals when clicking outside
